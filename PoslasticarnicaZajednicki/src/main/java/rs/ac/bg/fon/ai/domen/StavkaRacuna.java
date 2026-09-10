@@ -13,11 +13,11 @@ public class StavkaRacuna {
     }
 
     public StavkaRacuna(Racun racun, int rb, double cena, int kolicina, double iznos, Kolac kolac) {
-        this.racun = racun;
+    	this.racun = racun;
         this.rb = rb;
-        this.cena = cena;
-        this.kolicina = kolicina;
-        this.iznos = iznos;
+        setCena(cena);
+        setKolicina(kolicina);
+        setIznos(iznos);
         this.kolac = kolac;
     }
 
@@ -42,6 +42,10 @@ public class StavkaRacuna {
     }
 
     public void setCena(double cena) {
+    	if (cena <= 0) {
+            throw new IllegalArgumentException("Cena mora biti veca od nula!");
+        }
+
         this.cena = cena;
     }
 
@@ -50,6 +54,10 @@ public class StavkaRacuna {
     }
 
     public void setKolicina(int kolicina) {
+    	if (kolicina <= 0) {
+            throw new IllegalArgumentException("Kolicina mora biti veca od nula!");
+        }
+
         this.kolicina = kolicina;
     }
 
@@ -58,6 +66,10 @@ public class StavkaRacuna {
     }
 
     public void setIznos(double iznos) {
+    	if (iznos <= 0) {
+            throw new IllegalArgumentException("Iznos mora biti veci od nula!");
+        }
+
         this.iznos = iznos;
     }
 
