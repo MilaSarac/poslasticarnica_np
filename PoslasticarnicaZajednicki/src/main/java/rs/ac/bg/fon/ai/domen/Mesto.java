@@ -10,9 +10,8 @@ public class Mesto {
 	}
     
 	public Mesto(Long idMesto, String naziv) {
-		super();
 		this.idMesto = idMesto;
-		this.naziv = naziv;
+		setNaziv(naziv);
 	}
 
 	public Long getIdMesto() {
@@ -25,7 +24,15 @@ public class Mesto {
 		return naziv;
 	}
 	public void setNaziv(String naziv) {
-		this.naziv = naziv;
+		if (naziv == null) {
+	        throw new IllegalArgumentException("Naziv ne sme biti null!");
+	    }
+
+	    if (naziv.isEmpty()) {
+	        throw new IllegalArgumentException("Naziv ne sme biti prazan!");
+	    }
+
+	    this.naziv = naziv;
 	}
 
 	@Override
