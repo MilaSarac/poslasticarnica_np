@@ -25,7 +25,7 @@ public class Mesto {
 	}
 	public void setNaziv(String naziv) {
 		if (naziv == null) {
-	        throw new IllegalArgumentException("Naziv ne sme biti null!");
+	        throw new NullPointerException("Naziv ne sme biti null!");
 	    }
 
 	    if (naziv.isEmpty()) {

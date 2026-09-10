@@ -17,12 +17,12 @@ public class Racun {
     }
 
     public Racun(Long idRacun, Date datumIzdavanja, double ukupanIznos, Poslasticar poslasticar, Kupac kupac, ArrayList<StavkaRacuna> stavkeRacuna) {
-        this.idRacun = idRacun;
-        this.datumIzdavanja = datumIzdavanja;
-        this.ukupanIznos = ukupanIznos;
-        this.poslasticar = poslasticar;
-        this.kupac = kupac;
-        this.stavkeRacuna = stavkeRacuna;
+    	this.idRacun = idRacun;
+	    setDatumIzdavanja(datumIzdavanja);
+	    setUkupanIznos(ukupanIznos);
+	    setPoslasticar(poslasticar);
+	    setKupac(kupac);
+	    setStavkeRacuna(stavkeRacuna);
     }
 
     public Long getIdRacun() {
@@ -38,6 +38,18 @@ public class Racun {
     }
 
     public void setDatumIzdavanja(Date datumIzdavanja) {
+    	if (datumIzdavanja == null) {
+            throw new NullPointerException(
+                    "Datum izdavanja ne sme biti null!"
+            );
+        }
+
+        if (datumIzdavanja.after(new Date())) {
+            throw new IllegalArgumentException(
+                    "Datum izdavanja ne sme biti u buducnosti!"
+            );
+        }
+
         this.datumIzdavanja = datumIzdavanja;
     }
 
@@ -46,6 +58,12 @@ public class Racun {
     }
 
     public void setUkupanIznos(double ukupanIznos) {
+    	if (ukupanIznos <= 0) {
+            throw new IllegalArgumentException(
+                    "Ukupan iznos mora biti veci od nula!"
+            );
+        }
+
         this.ukupanIznos = ukupanIznos;
     }
 
