@@ -12,9 +12,9 @@ public class PoslasticarSmena {
     }
 
     public PoslasticarSmena(Poslasticar poslasticar, Smena smena, Date datum) {
-        this.poslasticar = poslasticar;
-        this.smena = smena;
-        this.datum = datum;
+    	setPoslasticar(poslasticar);
+        setSmena(smena);
+        setDatum(datum);
     }
 
     public Poslasticar getPoslasticar() {
@@ -38,6 +38,10 @@ public class PoslasticarSmena {
     }
 
     public void setDatum(Date datum) {
+    	if (datum == null) {
+            throw new NullPointerException("Datum ne sme biti null!");
+        }
+
         this.datum = datum;
     }
 }
