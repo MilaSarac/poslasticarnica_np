@@ -58,12 +58,12 @@ class KupacTest {
 
     @Test
     void testSetImeNull() {
-        assertThrows(NullPointerException.class, () -> k.setIme(null));
+        assertThrows(java.lang.NullPointerException.class, () -> k.setIme(null));
     }
 
     @Test
     void testSetImePrazno() {
-        assertThrows(IllegalArgumentException.class, () -> k.setIme(""));
+        assertThrows(java.lang.IllegalArgumentException.class, () -> k.setIme(""));
     }
 
     @Test
@@ -74,12 +74,12 @@ class KupacTest {
 
     @Test
     void testSetPrezimeNull() {
-        assertThrows(NullPointerException.class, () -> k.setPrezime(null));
+        assertThrows(java.lang.NullPointerException.class, () -> k.setPrezime(null));
     }
 
     @Test
     void testSetPrezimePrazno() {
-        assertThrows(IllegalArgumentException.class, () -> k.setPrezime(""));
+        assertThrows(java.lang.IllegalArgumentException.class, () -> k.setPrezime(""));
     }
 
     @Test
@@ -91,15 +91,15 @@ class KupacTest {
     @Test
     void testSetBrojTelefonaNull() {
         assertThrows(
-                NullPointerException.class,
+        		java.lang.NullPointerException.class,
                 () -> k.setBrojTelefona(null)
         );
     }
 
     @Test
-    void testSetBrojtelefonaPrazno() {
+    void testSetBrojTelefonaPrazno() {
         assertThrows(
-                IllegalArgumentException.class,
+        		java.lang.IllegalArgumentException.class,
                 () -> k.setBrojTelefona("")
         );
     }
@@ -112,18 +112,18 @@ class KupacTest {
 
     @Test
     void testSetEmailNull() {
-        assertThrows(NullPointerException.class, () -> k.setEmail(null));
+        assertThrows(java.lang.NullPointerException.class, () -> k.setEmail(null));
     }
 
     @Test
     void testSetEmailPrazno() {
-        assertThrows(IllegalArgumentException.class, () -> k.setEmail(""));
+        assertThrows(java.lang.IllegalArgumentException.class, () -> k.setEmail(""));
     }
 
     @Test
     void testSetEmailNeispravanFormat() {
         assertThrows(
-                IllegalArgumentException.class,
+        		java.lang.IllegalArgumentException.class,
                 () -> k.setEmail("milagmail.com")
         );
     }
@@ -136,7 +136,7 @@ class KupacTest {
 
     @Test
     void testSetMestoNull() {
-        assertThrows(NullPointerException.class, () -> k.setMesto(null));
+        assertThrows(java.lang.NullPointerException.class, () -> k.setMesto(null));
     }
 
     @Test
@@ -159,14 +159,12 @@ class KupacTest {
         "1, 2, false"
     })
     void testEquals(Long id1, Long id2, boolean ocekivano) {
-
-        Kupac k1 = new Kupac();
-        k1.setIdKupac(id1);
+        k.setIdKupac(id1);
 
         Kupac k2 = new Kupac();
         k2.setIdKupac(id2);
 
-        assertEquals(ocekivano, k1.equals(k2));
+        assertEquals(ocekivano, k.equals(k2));
     }
     
     /*
@@ -177,7 +175,7 @@ class KupacTest {
     })
     void testEquals(Long id1, Long id2, boolean ocekivano) {
 
-        Kupac k1 = new Kupac(
+        k = new Kupac(
                 id1, "Mila", "Sarac",
                 "0611234567", "mila@gmail.com", m);
 
@@ -185,7 +183,7 @@ class KupacTest {
                 id2, "Ana", "Jovic",
                 "0621234567", "ana@gmail.com", m);
 
-        assertEquals(ocekivano, k1.equals(k2));
+        assertEquals(ocekivano, k.equals(k2));
     }
     */
     /*

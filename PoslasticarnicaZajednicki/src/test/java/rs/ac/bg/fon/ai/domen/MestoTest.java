@@ -43,12 +43,12 @@ class MestoTest {
 
     @Test
     void testSetNazivNull() {
-        assertThrows(NullPointerException.class, () -> m.setNaziv(null));
+        assertThrows(java.lang.NullPointerException.class, () -> m.setNaziv(null));
     }
 
     @Test
     void testSetNazivPrazno() {
-        assertThrows(IllegalArgumentException.class, () -> m.setNaziv(""));
+        assertThrows(java.lang.IllegalArgumentException.class, () -> m.setNaziv(""));
     }
 
     @Test

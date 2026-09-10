@@ -16,13 +16,13 @@ public class Poslasticar {
 		
 	}
 	
-	public Poslasticar(Long idPoslasticar, String ime, String prezime, String korisnickoime, String sifra, Date datumZaposlenja) {
-        this.idPoslasticar = idPoslasticar;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.korisnickoIme = korisnickoime;
-        this.sifra = sifra;
-        this.datumZaposlenja = datumZaposlenja;
+	public Poslasticar(Long idPoslasticar, String ime, String prezime, String korisnickoIme, String sifra, Date datumZaposlenja) {
+		this.idPoslasticar = idPoslasticar;
+	    setIme(ime);
+	    setPrezime(prezime);
+	    setKorisnickoIme(korisnickoIme);
+	    setSifra(sifra);
+	    setDatumZaposlenja(datumZaposlenja);
     }
 
     @Override
@@ -43,6 +43,12 @@ public class Poslasticar {
     }
 
     public void setIme(String ime) {
+    	if (ime == null) {
+            throw new NullPointerException("Ime ne sme biti null!");
+        }
+        if (ime.isEmpty()) {
+            throw new IllegalArgumentException("Ime ne sme biti prazno!");
+        }
         this.ime = ime;
     }
 
@@ -51,6 +57,12 @@ public class Poslasticar {
     }
 
     public void setPrezime(String prezime) {
+    	if (prezime == null) {
+            throw new NullPointerException("Prezime ne sme biti null!");
+        }
+        if (prezime.isEmpty()) {
+            throw new IllegalArgumentException("Prezime ne sme biti prazno!");
+        }
         this.prezime = prezime;
     }
 
@@ -59,6 +71,12 @@ public class Poslasticar {
     }
 
     public void setKorisnickoIme(String korisnickoIme) {
+    	if (korisnickoIme == null) {
+            throw new NullPointerException("Korisnicko ime ne sme biti null!");
+        }
+        if (korisnickoIme.isEmpty()) {
+            throw new IllegalArgumentException("Korisnicko ime ne sme biti prazno!");
+        }
         this.korisnickoIme = korisnickoIme;
     }
 
@@ -67,6 +85,12 @@ public class Poslasticar {
     }
 
     public void setSifra(String sifra) {
+    	if (sifra == null) {
+            throw new NullPointerException("Sifra ne sme biti null!");
+        }
+        if (sifra.isEmpty()) {
+            throw new IllegalArgumentException("Sifra ne sme biti prazna!");
+        }
         this.sifra = sifra;
     }
 
@@ -75,6 +99,16 @@ public class Poslasticar {
     }
 
     public void setDatumZaposlenja(Date datumZaposlenja) {
+    	if (datumZaposlenja == null) {
+            throw new NullPointerException("Datum zaposlenja ne sme biti null!");
+        }
+
+        if (datumZaposlenja.after(new Date())) {
+            throw new IllegalArgumentException(
+                "Datum zaposlenja ne sme biti posle danasnjeg datuma!"
+            );
+        }
+
         this.datumZaposlenja = datumZaposlenja;
     }
 
