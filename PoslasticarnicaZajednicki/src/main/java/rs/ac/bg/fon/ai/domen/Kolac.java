@@ -90,7 +90,7 @@ public class Kolac {
     /**
      * Postavlja vrednost atributa naziv na novu unetu vrednost.
      * 
-     * Unesti naziv ne sme biti null niti prazan.
+     * Uneti naziv ne sme biti null niti prazan.
      * 
      * @param naziv Naziv kolaca kao String.
      * @throws java.lang.NullPointerException Ako je uneti naziv null
