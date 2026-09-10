@@ -12,9 +12,9 @@ public class Kolac {
 
     public Kolac(Long idKolac, String naziv, double cena, String opis) {
         this.idKolac = idKolac;
-        this.naziv = naziv;
-        this.cena = cena;
-        this.opis = opis;
+        setNaziv(naziv);
+        setCena(cena);
+        setOpis(opis);
     }
 
     @Override
@@ -35,6 +35,14 @@ public class Kolac {
     }
 
     public void setNaziv(String naziv) {
+    	if(naziv==null) {
+    		throw new NullPointerException("Naziv ne sme biti null!");
+    	}
+    	
+    	if(naziv.isEmpty()) {
+    		throw new IllegalArgumentException("Naziv ne sme biti prazan!");
+    	}
+    	
         this.naziv = naziv;
     }
 
@@ -43,6 +51,10 @@ public class Kolac {
     }
 
     public void setCena(double cena) {
+    	if (cena<=0) {
+            throw new IllegalArgumentException("Cena mora biti veca od nula!");
+        }
+    	
         this.cena = cena;
     }
 
@@ -51,6 +63,14 @@ public class Kolac {
     }
 
     public void setOpis(String opis) {
+    	if(opis==null) {
+    		throw new NullPointerException("Opis ne sme biti null!");
+    	}
+    	
+    	if(opis.isEmpty()) {
+    		throw new IllegalArgumentException("Opis ne sme biti prazan!");
+    	}
+    	
         this.opis = opis;
     }
 }
