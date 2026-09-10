@@ -7,7 +7,7 @@ public class Kupac {
 	private Long idKupac;
     private String ime;
     private String prezime;
-    private String brojtelefona;
+    private String brojTelefona;
     private String email;
     private Mesto mesto;
     
@@ -15,14 +15,13 @@ public class Kupac {
 
 	}
     
-	public Kupac(Long idKupac, String ime, String prezime, String brojtelefona, String email, Mesto mesto) {
-		super();
+	public Kupac(Long idKupac, String ime, String prezime, String brojTelefona, String email, Mesto mesto) {
 		this.idKupac = idKupac;
-		this.ime = ime;
-		this.prezime = prezime;
-		this.brojtelefona = brojtelefona;
-		this.email = email;
-		this.mesto = mesto;
+	    setIme(ime);
+	    setPrezime(prezime);
+	    setBrojTelefona(brojTelefona);
+	    setEmail(email);
+	    setMesto(mesto);
 	}
 
 	public Long getIdKupac() {
@@ -38,7 +37,13 @@ public class Kupac {
 	}
 
 	public void setIme(String ime) {
-		this.ime = ime;
+		if (ime == null) {
+	        throw new NullPointerException("Ime ne sme biti null!");
+	    }
+	    if (ime.isEmpty()) {
+	        throw new IllegalArgumentException("Ime ne sme biti prazno!");
+	    }
+	    this.ime = ime;
 	}
 
 	public String getPrezime() {
@@ -46,15 +51,27 @@ public class Kupac {
 	}
 
 	public void setPrezime(String prezime) {
-		this.prezime = prezime;
+		if (prezime == null) {
+	        throw new NullPointerException("Prezime ne sme biti null!");
+	    }
+	    if (prezime.isEmpty()) {
+	        throw new IllegalArgumentException("Prezime ne sme biti prazno!");
+	    }
+	    this.prezime = prezime;
 	}
 
-	public String getBrojtelefona() {
-		return brojtelefona;
+	public String getBrojTelefona() {
+		return brojTelefona;
 	}
 
-	public void setBrojtelefona(String brojtelefona) {
-		this.brojtelefona = brojtelefona;
+	public void setBrojTelefona(String brojTelefona) {
+		if (brojTelefona == null) {
+	        throw new NullPointerException("Broj telefona ne sme biti null!");
+	    }
+	    if (brojTelefona.isEmpty()) {
+	        throw new IllegalArgumentException("Broj telefona ne sme biti prazan!");
+	    }
+	    this.brojTelefona = brojTelefona;
 	}
 
 	public String getEmail() {
@@ -62,7 +79,16 @@ public class Kupac {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		if (email == null) {
+	        throw new NullPointerException("Email ne sme biti null!");
+	    }
+	    if (email.isEmpty()) {
+	        throw new IllegalArgumentException("Email ne sme biti prazan!");
+	    }
+	    if (!email.contains("@")) {
+	        throw new IllegalArgumentException("Email nije u odgovarajucem formatu!");
+	    }
+	    this.email = email;
 	}
 
 	public Mesto getMesto() {
@@ -70,7 +96,10 @@ public class Kupac {
 	}
 
 	public void setMesto(Mesto mesto) {
-		this.mesto = mesto;
+		if (mesto == null) {
+	        throw new NullPointerException("Mesto ne sme biti null!");
+	    }
+	    this.mesto = mesto;
 	}
 
 	@Override
@@ -95,6 +124,5 @@ public class Kupac {
 		return Objects.equals(idKupac, other.idKupac);
 	}
     
-	
     
 }
