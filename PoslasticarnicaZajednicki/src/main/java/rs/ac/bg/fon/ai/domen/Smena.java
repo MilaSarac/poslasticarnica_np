@@ -13,10 +13,10 @@ public class Smena {
     }
 
     public Smena(Long idSmena, String naziv, Date vremePocetka, Date vremeZavrsetka) {
-        this.idSmena = idSmena;
-        this.naziv = naziv;
-        this.vremePocetka = vremePocetka;
-        this.vremeZavrsetka = vremeZavrsetka;
+    	this.idSmena = idSmena;
+        setNaziv(naziv);
+        setVremePocetka(vremePocetka);
+        setVremeZavrsetka(vremeZavrsetka);
     }
 
     @Override
@@ -37,6 +37,14 @@ public class Smena {
     }
 
     public void setNaziv(String naziv) {
+    	if (naziv == null) {
+            throw new NullPointerException("Naziv smene ne sme biti null!");
+        }
+
+        if (naziv.isEmpty()) {
+            throw new IllegalArgumentException("Naziv smene ne sme biti prazan!");
+        }
+
         this.naziv = naziv;
     }
 
@@ -45,6 +53,9 @@ public class Smena {
     }
 
     public void setVremePocetka(Date vremePocetka) {
+    	if (vremePocetka == null) {
+            throw new NullPointerException("Vreme pocetka ne sme biti null!");
+        }
         this.vremePocetka = vremePocetka;
     }
 
@@ -53,6 +64,9 @@ public class Smena {
     }
 
     public void setVremeZavrsetka(Date vremeZavrsetka) {
+    	if (vremeZavrsetka == null) {
+            throw new NullPointerException("Vreme zavrsetka ne sme biti null!");
+        }
         this.vremeZavrsetka = vremeZavrsetka;
     }
     
