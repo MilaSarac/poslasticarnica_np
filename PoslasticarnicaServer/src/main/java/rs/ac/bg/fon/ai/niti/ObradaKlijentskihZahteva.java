@@ -6,6 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import rs.ac.bg.fon.ai.domen.Poslasticar;
+import rs.ac.bg.fon.ai.kontroler.ServerKontroler;
 import rs.ac.bg.fon.ai.transfer.KlijentskiZahtev;
 import rs.ac.bg.fon.ai.transfer.ServerskiOdgovor;
 import rs.ac.bg.fon.ai.transfer.util.Operacije;
@@ -30,8 +33,12 @@ public class ObradaKlijentskihZahteva extends Thread {
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 out.writeObject(so);
             }
-        } catch (Exception e) {
+        } catch (IOException ex) {
+            System.out.println("Klijent je prekinuo konekciju.");
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            zatvoriSocket();
         }
     }
 
@@ -41,6 +48,9 @@ public class ObradaKlijentskihZahteva extends Thread {
             switch (kz.getOperacija()) {
 
                 case Operacije.LOGIN:
+                	Poslasticar p =  (Poslasticar) kz.getZahtev();
+                    Poslasticar ulogovani = ServerKontroler.getInstance().login(p);
+                    so.setOdgovor(ulogovani);
                     break;
                 default:
                     return null;
