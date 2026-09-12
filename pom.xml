@@ -8,6 +8,8 @@
 
   <modules>
   	<module>PoslasticarnicaZajednicki</module>
+  	<module>PoslasticarnicaServer</module>
+  	<module>PoslasticarnicaKlijent</module>
   </modules>
   
   <dependencies>
