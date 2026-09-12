@@ -12,8 +12,6 @@ import java.util.Properties;
 
 import rs.ac.bg.fon.ai.domen.ApstraktniDomenskiObjekat;
 
-/*
- */
 public class DBBroker {
 
     private static DBBroker instance;
