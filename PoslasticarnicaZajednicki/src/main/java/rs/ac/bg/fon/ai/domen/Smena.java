@@ -1,5 +1,8 @@
 package rs.ac.bg.fon.ai.domen;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -10,7 +13,7 @@ import java.util.Date;
  * 
  * @author Mila
  */
-public class Smena {
+public class Smena extends ApstraktniDomenskiObjekat{
 
 	/**
 	 * ID smene kao Long vrednost.
@@ -153,4 +156,69 @@ public class Smena {
         }
         this.vremeZavrsetka = vremeZavrsetka;
     }
+    
+    @Override
+    public String nazivTabele() {
+        return " smena ";
+    }
+
+    @Override
+    public String alijas() {
+        return " s ";
+    }
+
+    @Override
+    public String join() {
+        return "";
+    }
+
+    @Override
+    public ArrayList<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws SQLException {
+        ArrayList<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Smena s = new Smena(
+                    rs.getLong("s.idSmena"),
+                    rs.getString("s.naziv"),
+                    rs.getDate("s.vremePocetka"),
+                    rs.getDate("s.vremeZavrsetka")
+            );
+            lista.add(s);
+        }
+        rs.close();
+        return lista;
+    }
+    
+    @Override
+    public String koloneZaDodaj() {
+        return " (naziv, vremePocetka, vremeZavrsetka) ";
+    }
+
+    @Override
+    public String vrednostiZaDodaj() {
+        return "'" + naziv + "', '" + vremePocetka + "', '" + vremeZavrsetka + "'";
+    }
+
+    @Override
+    public String vrednostiZaPromeni() {
+        return " naziv = '" + naziv + "', vremePocetka = '" + vremePocetka
+                + "', vremeZavrsetka = '" + vremeZavrsetka + "' ";
+    }
+
+    @Override
+    public String uslov() {
+        return " idSmena = " + idSmena;
+    }
+
+    @Override
+    public String uslovZaVrati() {
+        StringBuilder sb = new StringBuilder(" WHERE 1=1 ");
+        if (idSmena != null) {
+            sb.append(" AND s.idSmena = ").append(idSmena);
+        }
+        if (naziv != null && !naziv.isEmpty()) {
+            sb.append(" AND s.naziv LIKE '%").append(naziv).append("%'");
+        }
+        return sb.toString();
+    }
+    
 }

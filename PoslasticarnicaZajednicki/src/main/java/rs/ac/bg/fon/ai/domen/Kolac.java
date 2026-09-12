@@ -1,5 +1,9 @@
 package rs.ac.bg.fon.ai.domen;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  * Klasa koja predstavlja kolac u poslasticarnici.
  * 
@@ -8,7 +12,7 @@ package rs.ac.bg.fon.ai.domen;
  * 
  * @author Mila
  */
-public class Kolac {
+public class Kolac extends ApstraktniDomenskiObjekat{
 
 	 /**
      * ID kolaca kao Long vrednost.
@@ -158,5 +162,68 @@ public class Kolac {
     	}
     	
         this.opis = opis;
+    }
+    
+    @Override
+    public String nazivTabele() {
+        return " kolac ";
+    }
+
+    @Override
+    public String alijas() {
+        return " ko ";
+    }
+
+    @Override
+    public String join() {
+        return "";
+    }
+
+    @Override
+    public ArrayList<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws SQLException {
+        ArrayList<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Kolac ko = new Kolac(
+                    rs.getLong("ko.idKolac"),
+                    rs.getString("ko.naziv"),
+                    rs.getDouble("ko.cena"),
+                    rs.getString("ko.opis")
+            );
+            lista.add(ko);
+        }
+        rs.close();
+        return lista;
+    }
+
+    @Override
+    public String koloneZaDodaj() {
+        return " (naziv, cena, opis) ";
+    }
+
+    @Override
+    public String vrednostiZaDodaj() {
+        return "'" + naziv + "', '" + cena + "', " + opis;
+    }
+
+    @Override
+    public String vrednostiZaPromeni() {
+        return " cena = " + cena + ", opis = '" + opis + "' ";
+    }
+
+    @Override
+    public String uslov() {
+        return " idKolac = " + idKolac;
+    }
+
+    @Override
+    public String uslovZaVrati() {
+        StringBuilder sb = new StringBuilder(" WHERE 1=1 ");
+        if (idKolac != null) {
+            sb.append(" AND ko.idKolac = ").append(idKolac);
+        }
+        if (naziv != null && !naziv.isEmpty()) {
+            sb.append(" AND ko.naziv LIKE '%").append(naziv).append("%'");
+        }
+        return sb.toString();
     }
 }

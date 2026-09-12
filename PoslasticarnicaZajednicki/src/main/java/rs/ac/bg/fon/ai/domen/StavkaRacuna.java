@@ -1,5 +1,9 @@
 package rs.ac.bg.fon.ai.domen;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  * Klasa koja predstavlja stavku racuna u poslasticarnici.
  * 
@@ -8,7 +12,7 @@ package rs.ac.bg.fon.ai.domen;
  * 
  * @author Mila
  */
-public class StavkaRacuna {
+public class StavkaRacuna extends ApstraktniDomenskiObjekat{
 
 	/**
 	 * Racun kome stavka pripada kao objekat klase Racun.
@@ -192,4 +196,106 @@ public class StavkaRacuna {
     public void setKolac(Kolac kolac) {
         this.kolac = kolac;
     }
+    
+    @Override
+    public String nazivTabele() {
+        return " stavkaRacuna ";
+    }
+
+    @Override
+    public String alijas() {
+        return " sr ";
+    }
+
+    @Override
+    public String join() {
+        return " JOIN racun r ON (r.idRacun = sr.idRacun) "
+                + " JOIN poslasticar p ON (p.idPoslasticar = r.idPoslasticar) "
+                + " JOIN kupac k ON (k.idKupac = r.idKupac) "
+                + " JOIN mesto m ON ON (m.idMesto = k.idMesto) "
+                + " JOIN kolac ko ON (ko.idKolac = sr.idKolac) ";
+    }
+
+    @Override
+    public ArrayList<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws SQLException {
+        ArrayList<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+
+            Poslasticar p = new Poslasticar(
+                    rs.getLong("p.idPoslasticar"),
+                    rs.getString("p.ime"),
+                    rs.getString("p.prezime"),
+                    rs.getString("p.korisnickoIme"),
+                    rs.getString("p.sifra"),
+                    rs.getDate("p.datumZaposlenja")
+            );
+            Mesto m = new Mesto(
+                    rs.getLong("m.idMesto"),
+                    rs.getString("m.naziv")
+            );
+            Kupac k = new Kupac(
+                    rs.getLong("k.idKupac"),
+                    rs.getString("k.ime"),
+                    rs.getString("k.prezime"),
+                    rs.getString("k.brojTelefona"),
+                    rs.getString("k.email"),
+                    m
+            );
+            Racun r = new Racun(
+                    rs.getLong("r.idRacun"),
+                    rs.getDate("r.datumIzdavanja"),
+                    rs.getDouble("r.ukupanIznos"),
+                    p, k, null
+            );
+
+            Kolac ko = new Kolac(
+                    rs.getLong("ko.idKolac"),
+                    rs.getString("ko.naziv"),
+                    rs.getDouble("ko.cena"),
+                    rs.getString("ko.opis")
+            );
+
+            StavkaRacuna sr = new StavkaRacuna(
+                    r,
+                    rs.getInt("sr.rb"),
+                    rs.getDouble("sr.cena"),
+                    rs.getInt("sr.kolicina"),
+                    rs.getDouble("sr.iznos"),
+                    ko
+            );
+
+            lista.add(sr);
+        }
+        rs.close();
+        return lista;
+    }
+
+    @Override
+    public String koloneZaDodaj() {
+        return " (idRacun, rb, cena, kolicina, iznos, idKolac) ";
+    }
+
+    @Override
+    public String vrednostiZaDodaj() {
+        return racun.getIdRacun() + ", " + rb + ", " + cena + ", "
+                + kolicina + ", " + iznos + ", " + kolac.getIdKolac();
+    }
+
+    @Override
+    public String vrednostiZaPromeni() {
+        return " cena = " + cena + ", iznos = " + iznos
+                + ", kolicina = " + kolicina + ", "
+                + "idKolac = " + kolac.getIdKolac() + " ";
+    }
+
+    @Override
+    public String uslov() {
+        return " idRacun = " + racun.getIdRacun() + " AND rb = " + rb;
+    }
+
+    @Override
+    public String uslovZaVrati() {
+        return " WHERE sr.idRacun = " + racun.getIdRacun();
+    }
+    
 }

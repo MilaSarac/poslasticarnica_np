@@ -1,6 +1,9 @@
 package rs.ac.bg.fon.ai.domen;
 
 import java.util.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Klasa koja predstavlja angazovanje poslasticara u odredjenoj smeni
@@ -11,7 +14,7 @@ import java.util.Date;
  * 
  * @author Mila
  */
-public class PoslasticarSmena {
+public class PoslasticarSmena extends ApstraktniDomenskiObjekat{
 
 	/**
 	 * Poslasticar kao objekat klase Poslasticar.
@@ -106,4 +109,73 @@ public class PoslasticarSmena {
 
         this.datum = datum;
     }
+    
+    @Override
+    public String nazivTabele() {
+        return " poslasticarSmena ";
+    }
+
+    @Override
+    public String alijas() {
+        return " ps ";
+    }
+
+    @Override
+    public String join() {
+        return " JOIN poslasticar p ON (p.idPoslasticar = ps.idPoslasticar) "
+                + " JOIN Smena s ON (s.idSmena= ps.idSmena) ";
+    }
+
+    @Override
+    public ArrayList<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws SQLException {
+        ArrayList<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Poslasticar p = new Poslasticar(
+                    rs.getLong("p.idPoslasticar"),
+                    rs.getString("p.ime"),
+                    rs.getString("p.prezime"),
+                    rs.getString("p.korisnickoIme"),
+                    rs.getString("p.sifra"),
+                    rs.getDate("p.datumZaposlenja")
+            );
+            Smena s = new Smena(
+                    rs.getLong("s.idSmena"),
+                    rs.getString("s.naziv"),
+                    rs.getDate("s.vremePocetka"),
+                    rs.getDate("s.vremeZavrsetka")
+            );
+            PoslasticarSmena ps = new PoslasticarSmena(p, s, rs.getDate("ps.datum"));
+            lista.add(ps);
+        }
+        rs.close();
+        return lista;
+    }
+
+    @Override
+    public String koloneZaDodaj() {
+        return " (idPoslasticar, idSmena, datum) ";
+    }
+
+    @Override
+    public String vrednostiZaDodaj() {
+        return poslasticar.getIdPoslasticar() + ", " + smena.getIdSmena()
+                + ", '" + datum + "'";
+    }
+
+    @Override
+    public String vrednostiZaPromeni() {
+        return " datum = '" + datum + "' ";
+    }
+
+    @Override
+    public String uslov() {
+        return " idPoslasticar = " + poslasticar.getIdPoslasticar()
+                + " AND idSmena= " + smena.getIdSmena();
+    }
+
+    @Override
+    public String uslovZaVrati() {
+        return "";
+    }
+    
 }

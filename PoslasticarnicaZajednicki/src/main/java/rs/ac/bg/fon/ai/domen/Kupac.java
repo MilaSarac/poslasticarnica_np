@@ -1,6 +1,9 @@
 package rs.ac.bg.fon.ai.domen;
 
 import java.util.Objects;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Klasa koja predstavlja kupca u poslasticarnici.
@@ -10,7 +13,7 @@ import java.util.Objects;
  * 
  * @author Mila
  */
-public class Kupac {
+public class Kupac extends ApstraktniDomenskiObjekat{
 
 	/**
 	 * ID kupca kao Long vrednost.
@@ -264,5 +267,86 @@ public class Kupac {
 		return Objects.equals(idKupac, other.idKupac);
 	}
     
-    
+	@Override
+    public String nazivTabele() {
+        return " kupac ";
+    }
+
+    @Override
+    public String alijas() {
+        return " k ";
+    }
+
+    @Override
+    public String join() {
+        return " JOIN mesto m ON (m.idMesto = k.idMesto) ";
+    }
+
+    @Override
+    public ArrayList<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws SQLException {
+        ArrayList<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Mesto m = new Mesto(
+                    rs.getLong("m.idMesto"),
+                    rs.getString("m.naziv")
+            );
+            Kupac k = new Kupac(
+                    rs.getLong("k.idKupac"),
+                    rs.getString("k.ime"),
+                    rs.getString("k.prezime"),
+                    rs.getString("k.brojTelefona"),
+                    rs.getString("k.email"),
+                    m
+            );
+            lista.add(k);
+        }
+        rs.close();
+        return lista;
+    }
+
+    @Override
+    public String koloneZaDodaj() {
+        return " (ime, prezime, brojTelefona, email, idMesto) ";
+    }
+
+    @Override
+    public String vrednostiZaDodaj() {
+        return "'" + ime + "', '" + prezime + "', '" + brojTelefona + "', '"
+                + email + "', " + mesto.getIdMesto();
+    }
+
+    @Override
+    public String vrednostiZaPromeni() {
+        return " brojtelefona = '" + brojTelefona + "', email = '" + email + "', "
+                + "idMesto = " + mesto.getIdMesto() + " ";
+    }
+
+    @Override
+    public String uslov() {
+        return " idKupac = " + idKupac;
+    }
+
+    @Override
+    public String uslovZaVrati() {
+        StringBuilder sb = new StringBuilder(" WHERE 1=1 ");
+        if (idKupac != null) {
+            sb.append(" AND k.idKupac = ").append(idKupac);
+        }
+        if (ime != null && !ime.isEmpty()) {
+            sb.append(" AND k.ime LIKE '%").append(ime).append("%'");
+        }
+        if (prezime != null && !prezime.isEmpty()) {
+            sb.append(" AND k.prezime LIKE '%").append(prezime).append("%'");
+        }
+        if (brojTelefona != null && !brojTelefona.isEmpty()) {
+            sb.append(" AND k.brojTelefona = '").append(brojTelefona).append("'");
+        }
+        if (email != null && !email.isEmpty()) {
+            sb.append(" AND k.email = '").append(email).append("'");
+        }
+        if (mesto != null && mesto.getIdMesto() != null) {
+            sb.append(" AND k.idMesto = ").append(mesto.getIdMesto());
+        }
+        return sb.toString();
+    }
 }

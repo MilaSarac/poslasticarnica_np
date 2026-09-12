@@ -2,6 +2,9 @@ package rs.ac.bg.fon.ai.domen;
 
 import java.util.Date;
 import java.util.Objects;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Klasa koja predstavlja poslasticara u poslasticarnici.
@@ -11,7 +14,7 @@ import java.util.Objects;
  * 
  * @author Mila
  */
-public class Poslasticar {
+public class Poslasticar extends ApstraktniDomenskiObjekat{
 
 	/**
 	 * ID poslasticara kao Long vrednost.
@@ -266,4 +269,77 @@ public class Poslasticar {
 		Poslasticar other = (Poslasticar) obj;
 		return Objects.equals(idPoslasticar, other.idPoslasticar);
 	}
+	
+	@Override
+    public String nazivTabele() {
+        return " poslasticar ";
+    }
+
+    @Override
+    public String alijas() {
+        return " p ";
+    }
+
+    @Override
+    public String join() {
+        return "";
+    }
+
+    @Override
+    public ArrayList<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws SQLException {
+        ArrayList<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Poslasticar p = new Poslasticar(
+                    rs.getLong("p.idPoslasticar"),
+                    rs.getString("p.ime"),
+                    rs.getString("p.prezime"),
+                    rs.getString("p.korisnickoIme"),
+                    rs.getString("p.sifra"),
+                    rs.getDate("p.datumZaposlenja")
+            );
+            lista.add(p);
+        }
+        rs.close();
+        return lista;
+    }
+    @Override
+    public String koloneZaDodaj() {
+        return " (ime, prezime, korisnickoIme, sifra, datumZaposlenja) ";
+    }
+
+    @Override
+    public String vrednostiZaDodaj() {
+        return "'" + ime + "', '" + prezime + "', '"
+                + korisnickoIme + "', '" + sifra + "', '"
+                + datumZaposlenja + "'";
+    }
+
+    @Override
+    public String vrednostiZaPromeni() {
+        return " ime = '" + ime + "', prezime = '" + prezime
+                + "', korisnickoIme = '" + korisnickoIme
+                + "', sifra = '" + sifra
+                + "', datumZaposlenja = '" + datumZaposlenja + "' ";
+    }
+
+    @Override
+    public String uslov() {
+        return " idPoslasticar = " + idPoslasticar;
+    }
+
+    @Override
+    public String uslovZaVrati() {
+        StringBuilder sb = new StringBuilder(" WHERE 1=1 ");
+        if (idPoslasticar != null) {
+            sb.append(" AND p.idPoslasticar = ").append(idPoslasticar);
+        }
+        if (ime != null && !ime.isEmpty()) {
+            sb.append(" AND p.ime LIKE '%").append(ime).append("%'");
+        }
+        if (prezime != null && !prezime.isEmpty()) {
+            sb.append(" AND p.prezime LIKE '%").append(prezime).append("%'");
+        }
+        return sb.toString();
+    }
+    
 }

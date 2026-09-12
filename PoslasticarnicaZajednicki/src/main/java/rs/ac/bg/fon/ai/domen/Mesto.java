@@ -1,5 +1,9 @@
 package rs.ac.bg.fon.ai.domen;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  * Klasa koja predstavlja mesto u sistemu poslasticarnice.
  * 
@@ -8,7 +12,7 @@ package rs.ac.bg.fon.ai.domen;
  * 
  * @author Mila
  */
-public class Mesto {
+public class Mesto extends ApstraktniDomenskiObjekat{
 
 	/**
      * ID mesta kao Long vrednost.
@@ -96,5 +100,65 @@ public class Mesto {
 		return naziv;
 	}
     
+	@Override
+    public String nazivTabele() {
+        return " mesto ";
+    }
+
+    @Override
+    public String alijas() {
+        return " m ";
+    }
+
+    @Override
+    public String join() {
+        return "";
+    }
+
+    @Override
+    public ArrayList<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws SQLException {
+        ArrayList<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Mesto m = new Mesto(
+                    rs.getLong("m.idMesto"),
+                    rs.getString("m.naziv")
+            );
+            lista.add(m);
+        }
+        rs.close();
+        return lista;
+    }
+    
+    @Override
+    public String koloneZaDodaj() {
+        return " (naziv) ";
+    }
+
+    @Override
+    public String vrednostiZaDodaj() {
+        return "'" + naziv + "'";
+    }
+
+    @Override
+    public String vrednostiZaPromeni() {
+        return " naziv = '" + naziv + "' ";
+    }
+
+    @Override
+    public String uslov() {
+        return " idMesto = " + idMesto;
+    }
+
+    @Override
+    public String uslovZaVrati() {
+        StringBuilder sb = new StringBuilder(" WHERE 1=1 ");
+        if (idMesto != null) {
+            sb.append(" AND m.idMesto = ").append(idMesto);
+        }
+        if (naziv != null && !naziv.isEmpty()) {
+            sb.append(" AND m.naziv LIKE '%").append(naziv).append("%'");
+        }
+        return sb.toString();
+    }
     
 }

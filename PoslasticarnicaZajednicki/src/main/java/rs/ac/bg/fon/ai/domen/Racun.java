@@ -1,6 +1,8 @@
 package rs.ac.bg.fon.ai.domen;
 
 import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -11,7 +13,7 @@ import java.util.Date;
  * 
  * @author Mila
  */
-public class Racun {
+public class Racun extends ApstraktniDomenskiObjekat{
 
     /**
      * ID racuna kao Long vrednost.
@@ -204,6 +206,95 @@ public class Racun {
      */
     public void setStavkeRacuna(ArrayList<StavkaRacuna> stavkeRacuna) {
         this.stavkeRacuna = stavkeRacuna;
+    }
+    
+    @Override
+    public String nazivTabele() {
+        return " racun ";
+    }
+
+    @Override
+    public String alijas() {
+        return " r ";
+    }
+
+    @Override
+    public String join() {
+        return " JOIN poslasticar p ON (p.idPoslasticar = r.idPoslasticar) "
+                + " JOIN kupac k ON (k.idKupac = r.idKupac) "
+                + " JOIN mesto m ON ON (m.idMesto = k.idMesto) ";
+    }
+    @Override
+    public ArrayList<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws SQLException {
+        ArrayList<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Poslasticar p = new Poslasticar(
+                    rs.getLong("p.idPoslasticar"),
+                    rs.getString("p.ime"),
+                    rs.getString("p.prezime"),
+                    rs.getString("p.korisnickoIme"),
+                    rs.getString("p.sifra"),
+                    rs.getDate("p.datumZaposlenja")
+            );
+            Mesto m = new Mesto(
+                    rs.getLong("m.idMesto"),
+                    rs.getString("m.naziv")
+            );
+            Kupac k = new Kupac(
+                    rs.getLong("k.idKupac"),
+                    rs.getString("k.ime"),
+                    rs.getString("k.prezime"),
+                    rs.getString("k.brojTelefona"),
+                    rs.getString("k.email"),
+                    m
+            );
+            Racun r = new Racun(
+                    rs.getLong("r.idRacun"),
+                    rs.getDate("r.datumIzdavanja"),
+                    rs.getDouble("r.ukupanIznos"),
+                    p, k, null
+            );
+            lista.add(r);
+        }
+        rs.close();
+        return lista;
+    }
+
+    @Override
+    public String koloneZaDodaj() {
+        return " (datumIzdavanja, ukupanIznos, idPoslasticar, idKupac) ";
+    }
+
+    @Override
+    public String vrednostiZaDodaj() {
+        return "'" + new java.sql.Date(datumIzdavanja.getTime()) + "', " + ukupanIznos + ", "
+                + poslasticar.getIdPoslasticar() + ", " + kupac.getIdKupac();
+    }
+
+    @Override
+    public String vrednostiZaPromeni() {
+        return " datumIzdavanja = '" + new java.sql.Date(datumIzdavanja.getTime()) + "', "
+                + "ukupanIznos = " + ukupanIznos + " ";
+    }
+
+    @Override
+    public String uslov() {
+        return " idRacun = " + idRacun;
+    }
+
+    @Override
+    public String uslovZaVrati() {
+        StringBuilder sb = new StringBuilder(" WHERE 1=1 ");
+        if (idRacun != null) {
+            sb.append(" AND r.idRacun = ").append(idRacun);
+        }
+        if (poslasticar != null && poslasticar.getIdPoslasticar() != null) {
+            sb.append(" AND r.idPoslasticar = ").append(poslasticar.getIdPoslasticar());
+        }
+        if (kupac != null && kupac.getIdKupac() != null) {
+            sb.append(" AND r.idKupac = ").append(kupac.getIdKupac());
+        }
+        return sb.toString();
     }
 
 }
