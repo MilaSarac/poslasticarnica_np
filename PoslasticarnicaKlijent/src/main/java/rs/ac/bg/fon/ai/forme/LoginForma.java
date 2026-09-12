@@ -17,6 +17,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
+import java.awt.Dimension;
 
 public class LoginForma extends javax.swing.JFrame {
 
@@ -45,7 +46,17 @@ public class LoginForma extends javax.swing.JFrame {
         txtUsername = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnOtkazi = new javax.swing.JButton();
+        btnOtkazi.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		btnOtkaziActionPerformed(e);
+        	}
+        });
         btnLogin = new javax.swing.JButton();
+        btnLogin.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		btnLoginActionPerformed(e);
+        	}
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,26 +73,26 @@ public class LoginForma extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(layout.createSequentialGroup()
+        		.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
         			.addContainerGap()
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
         				.addGroup(layout.createSequentialGroup()
-        					.addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        					.addGap(18))
+        					.addComponent(btnOtkazi)
+        					.addGap(80)
+        					.addComponent(btnLogin))
         				.addGroup(layout.createSequentialGroup()
-        					.addComponent(jLabel2)
-        					.addGap(20)))
-        			.addGap(11)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(txtPassword, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-        				.addComponent(txtUsername, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
-        			.addGap(69))
-        		.addGroup(layout.createSequentialGroup()
-        			.addGap(24)
-        			.addComponent(btnOtkazi)
-        			.addGap(80)
-        			.addComponent(btnLogin)
-        			.addContainerGap(80, Short.MAX_VALUE))
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        							.addGap(18))
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(jLabel2)
+        							.addGap(20)))
+        					.addGap(11)
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(txtUsername, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+        						.addComponent(txtPassword, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))))
+        			.addGap(160))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
@@ -89,16 +100,16 @@ public class LoginForma extends javax.swing.JFrame {
         			.addGap(31)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(jLabel1)
-        				.addComponent(txtUsername, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
+        				.addComponent(txtUsername, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
         				.addComponent(jLabel2)
-        				.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
-        			.addGap(30)
+        				.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(37)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(btnOtkazi)
         				.addComponent(btnLogin))
-        			.addContainerGap(92, Short.MAX_VALUE))
+        			.addContainerGap(79, Short.MAX_VALUE))
         );
         getContentPane().setLayout(layout);
 
@@ -107,7 +118,8 @@ public class LoginForma extends javax.swing.JFrame {
     
     private void btnOtkaziActionPerformed(java.awt.event.ActionEvent evt) {   
     	
-        System.exit(0);   
+    	Sesija.getInstance().close();
+    	System.exit(0); 
         
     }
     

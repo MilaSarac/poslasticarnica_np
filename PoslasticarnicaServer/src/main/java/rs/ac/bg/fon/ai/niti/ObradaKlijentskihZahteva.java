@@ -33,8 +33,12 @@ public class ObradaKlijentskihZahteva extends Thread {
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 out.writeObject(so);
             }
-        } catch (Exception e) {
+        } catch (IOException ex) {
+            System.out.println("Klijent je prekinuo konekciju.");
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            zatvoriSocket();
         }
     }
 
