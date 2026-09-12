@@ -6,4 +6,13 @@
     <version>1.0.0</version>
   </parent>
   <artifactId>PoslasticarnicaKlijent</artifactId>
+  
+  <dependencies>
+    <dependency>
+        <groupId>rs.ac.bg.fon.ai</groupId>
+        <artifactId>PoslasticarnicaZajednicki</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+</dependencies>
+
 </project>
