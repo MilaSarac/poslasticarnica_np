@@ -9,9 +9,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import rs.ac.bg.fon.ai.domen.Kolac;
+import rs.ac.bg.fon.ai.kontroler.KlijentKontroler;
 import rs.ac.bg.fon.ai.modeli.ModelTabeleKolac;
 
 import javax.swing.GroupLayout.Alignment;
+
+import java.util.ArrayList;
+
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -45,6 +50,7 @@ public class FormaKolac extends JFrame {
         initialize();
         setLocationRelativeTo(null);
         tblKolaci.setModel(new ModelTabeleKolac());
+        popuniTabelu();
     }
 
     private void initialize() {
@@ -119,36 +125,37 @@ public class FormaKolac extends JFrame {
         javax.swing.GroupLayout layout =
                 new javax.swing.GroupLayout(pnlKolaci);
         layout.setHorizontalGroup(
-        	layout.createParallelGroup(Alignment.TRAILING)
-        		.addGroup(Alignment.LEADING, layout.createSequentialGroup()
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
         			.addGap(30)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
-        					.addGroup(Alignment.LEADING, layout.createSequentialGroup()
-        						.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        							.addComponent(lblNaziv)
-        							.addComponent(lblCena)
-        							.addComponent(lblOpis))
-        						.addGap(35)
-        						.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-        							.addComponent(txtNaziv)
-        							.addComponent(txtOpis)
-        							.addComponent(txtCena, GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
-        							.addComponent(btnDodaj, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
-        					.addGroup(Alignment.LEADING, layout.createSequentialGroup()
-        						.addComponent(lblPretraga)
-        						.addGap(18)
-        						.addComponent(txtPretraga, GroupLayout.PREFERRED_SIZE, 337, GroupLayout.PREFERRED_SIZE)
-        						.addPreferredGap(ComponentPlacement.UNRELATED)
-        						.addComponent(btnPretrazi, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
         				.addGroup(layout.createSequentialGroup()
         					.addGap(8)
-        					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 436, GroupLayout.PREFERRED_SIZE)
-        					.addGap(18)
+        					.addComponent(scrollPane))
+        				.addGroup(Alignment.LEADING, layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(lblNaziv)
+        						.addComponent(lblCena)
+        						.addComponent(lblOpis))
+        					.addGap(35)
         					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-        						.addComponent(btnObrisi, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        						.addComponent(btnIzmeni, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))))
+        						.addComponent(txtNaziv)
+        						.addComponent(txtOpis)
+        						.addComponent(txtCena, GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+        						.addComponent(btnDodaj, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
+        				.addGroup(Alignment.LEADING, layout.createSequentialGroup()
+        					.addComponent(lblPretraga)
+        					.addGap(18)
+        					.addComponent(txtPretraga, GroupLayout.PREFERRED_SIZE, 337, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(btnPretrazi, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         			.addGap(300))
+        		.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+        			.addGap(325)
+        			.addComponent(btnIzmeni, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+        			.addGap(45)
+        			.addComponent(btnObrisi, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+        			.addGap(317))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
@@ -170,18 +177,15 @@ public class FormaKolac extends JFrame {
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(lblOpis)
         				.addComponent(txtOpis, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(layout.createSequentialGroup()
-        					.addPreferredGap(ComponentPlacement.UNRELATED)
-        					.addComponent(btnDodaj)
-        					.addGap(49)
-        					.addComponent(btnIzmeni)
-        					.addGap(30)
-        					.addComponent(btnObrisi))
-        				.addGroup(layout.createSequentialGroup()
-        					.addGap(45)
-        					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)))
-        			.addContainerGap(280, Short.MAX_VALUE))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addComponent(btnDodaj)
+        			.addGap(14)
+        			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+        			.addGap(26)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(btnIzmeni)
+        				.addComponent(btnObrisi))
+        			.addContainerGap(225, Short.MAX_VALUE))
         );
 
         pnlKolaci.setLayout(layout);
@@ -201,5 +205,19 @@ public class FormaKolac extends JFrame {
 
     private void btnPretraziActionPerformed() {
 
+    }
+    
+    private void popuniTabelu() {
+        try {
+            ArrayList<Kolac> kolaci = KlijentKontroler.getInstance().vratiSveKolace();
+
+            ModelTabeleKolac model =
+                    (ModelTabeleKolac) tblKolaci.getModel();
+
+            model.setLista(kolaci);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -10,6 +10,7 @@ import javax.swing.border.TitledBorder;
 import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.domen.StavkaRacuna;
+import rs.ac.bg.fon.ai.forme.kolac.FormaKolac;
 import rs.ac.bg.fon.ai.kontroler.KlijentKontroler;
 import rs.ac.bg.fon.ai.modeli.ModelTabeleStavkaRacuna;
 import rs.ac.bg.fon.ai.sesija.Sesija;
@@ -79,8 +80,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         miNovaSmena = new javax.swing.JRadioButtonMenuItem();
         miPretragaPlesa = new javax.swing.JRadioButtonMenuItem();
         mnKolac = new javax.swing.JMenu();
-        miNoviKolac = new javax.swing.JRadioButtonMenuItem();
-        miPretragaFigura = new javax.swing.JRadioButtonMenuItem();
+        miKolac = new javax.swing.JRadioButtonMenuItem();
         mnRacun = new javax.swing.JMenu();
         miPretragaEvidencije = new javax.swing.JRadioButtonMenuItem();
         mnOdjava = new javax.swing.JMenu();
@@ -283,23 +283,14 @@ public class GlavnaForma extends javax.swing.JFrame {
 
         mnKolac.setText("Kolac");
 
-        miNoviKolac.setSelected(true);
-        miNoviKolac.setText("Novi kolac");
-        miNoviKolac.addActionListener(new java.awt.event.ActionListener() {
+        miKolac.setSelected(true);
+        miKolac.setText("Upravljanje kolačem");
+        miKolac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+            	mnKolacActionPerformed(evt);
             }
         });
-        mnKolac.add(miNoviKolac);
-
-        miPretragaFigura.setSelected(true);
-        miPretragaFigura.setText("Pretraga");
-        miPretragaFigura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
-            }
-        });
-        mnKolac.add(miPretragaFigura);
+        mnKolac.add(miKolac);
 
         jMenuBar1.add(mnKolac);
 
@@ -476,13 +467,12 @@ public class GlavnaForma extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JRadioButtonMenuItem miNoviKolac;
+    private javax.swing.JRadioButtonMenuItem miKolac;
     private javax.swing.JRadioButtonMenuItem miNovaSmena;
     private javax.swing.JRadioButtonMenuItem miNoviKupac;
     private javax.swing.JRadioButtonMenuItem miOdjava;
     private javax.swing.JRadioButtonMenuItem miPretraga;
     private javax.swing.JRadioButtonMenuItem miPretragaEvidencije;
-    private javax.swing.JRadioButtonMenuItem miPretragaFigura;
     private javax.swing.JRadioButtonMenuItem miPretragaPlesa;
     private javax.swing.JMenu mnKolac;
     private javax.swing.JMenu mnRacun;
@@ -508,6 +498,9 @@ public class GlavnaForma extends javax.swing.JFrame {
         }
     } //Logger.getLogger(FormaNoviPolaznik.class.getName()).log(Level.SEVERE, null, ex);
     
-    
+    private void mnKolacActionPerformed(java.awt.event.ActionEvent evt) {
+        FormaKolac forma = new FormaKolac();
+        forma.setVisible(true);
+    }
 }
 
