@@ -280,7 +280,40 @@ public class FormaKolac extends JFrame {
     }
 
     private void btnObrisiActionPerformed() {
+        try {
 
+            if (izabraniKolac == null) {
+                JOptionPane.showMessageDialog(this, "Morate izabrati kolač iz tabele!");
+                return;
+            }
+
+            int odgovor = JOptionPane.showConfirmDialog(
+                    this,
+                    "Da li ste sigurni da zelite da obrišete izabrani kolač?",
+                    "Potvrda",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (odgovor != JOptionPane.YES_OPTION) {
+                return;
+            }
+
+            KlijentKontroler.getInstance().obrisiKolac(izabraniKolac);
+            JOptionPane.showMessageDialog(this, "Kolač je uspešno obrisan!");
+
+            popuniTabelu();
+
+            txtNaziv.setText("");
+            txtCena.setText("");
+            txtOpis.setText("");
+
+            txtNaziv.setEditable(true);
+
+            izabraniKolac = null;
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 
     private void btnPretraziActionPerformed() {

@@ -26,4 +26,8 @@ public interface Operacije {
      * Konstanta koja predstavlja operaciju izmene kolaca u sistemu.
      */
     public static final int IZMENI_KOLAC = 3;
+    /**
+     * Konstanta koja predstavlja operaciju brisanja kolaca iz sistema.
+     */
+    public static final int OBRISI_KOLAC = 4;
 }

@@ -65,6 +65,9 @@ public class ObradaKlijentskihZahteva extends Thread {
                 case Operacije.IZMENI_KOLAC:
                     ServerKontroler.getInstance().izmeniKolac((Kolac) kz.getZahtev());
                     break;
+                case Operacije.OBRISI_KOLAC:
+                    ServerKontroler.getInstance().obrisiKolac((Kolac) kz.getZahtev());
+                    break;
                
                 default:
                     return null;

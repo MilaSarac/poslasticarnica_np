@@ -59,4 +59,8 @@ public class KlijentKontroler {
     public void izmeniKolac(Kolac kolac) throws Exception {
         posaljiZahtev(Operacije.IZMENI_KOLAC, kolac);
     }
+    
+    public void obrisiKolac(Kolac kolac) throws Exception {
+        posaljiZahtev(Operacije.OBRISI_KOLAC, kolac);
+    }
 }
