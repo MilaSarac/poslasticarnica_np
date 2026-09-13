@@ -44,7 +44,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         
         setTitle("Poslasticarnica");
         txtUkupanIznos.setEditable(false);
-        
+        tblStavke.setModel(new ModelTabeleStavkaRacuna());
     }
 
 	/**
