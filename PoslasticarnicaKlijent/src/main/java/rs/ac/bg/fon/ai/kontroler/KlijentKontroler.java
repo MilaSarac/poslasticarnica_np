@@ -51,4 +51,8 @@ public class KlijentKontroler {
     public ArrayList<Kolac> vratiSveKolace() throws Exception {
         return (ArrayList<Kolac>) posaljiZahtev(Operacije.VRATI_SVE_KOLACE, new Kolac());
     }
+    
+    public void dodajKolac(Kolac kolac) throws Exception {
+        posaljiZahtev(Operacije.DODAJ_KOLAC, kolac);
+    }
 }

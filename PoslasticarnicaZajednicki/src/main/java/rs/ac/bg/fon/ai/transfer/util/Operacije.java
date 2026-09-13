@@ -18,4 +18,8 @@ public interface Operacije {
      * Konstanta koja predstavlja operaciju vracanja svih kolaca iz sistema.
      */
     public static final int VRATI_SVE_KOLACE = 1;
+    /**
+     * Konstanta koja predstavlja operaciju dodavanja kolaca u sistem.
+     */
+    public static final int DODAJ_KOLAC = 2;
 }

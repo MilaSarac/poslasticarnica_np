@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
+import rs.ac.bg.fon.ai.so.kolac.SODodajKolac;
 import rs.ac.bg.fon.ai.so.kolac.SOVratiSveKolace;
 import rs.ac.bg.fon.ai.so.login.SOLogin;
 
@@ -38,5 +39,9 @@ public class ServerKontroler {
         SOVratiSveKolace so = new SOVratiSveKolace();
         so.izvrsi(new Kolac());
         return so.getLista();
+    }
+    
+    public void dodajKolac(Kolac kolac) throws Exception {
+        (new SODodajKolac()).izvrsi(kolac);
     }
 }
