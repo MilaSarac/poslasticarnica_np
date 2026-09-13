@@ -5,8 +5,27 @@ import rs.ac.bg.fon.ai.domen.ApstraktniDomenskiObjekat;
 import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.sistemskaOperacija.ApstraktnaSistemskaOperacija;
 
+/**
+ * Sistemska operacija koja omogucava izmenu postojeceg kolaca u sistemu.
+ *
+ * Pre izmene kolaca vrsi se validacija prosledjenog objekta i podataka
+ * koji se menjaju.
+ *
+ * @author Mila
+ */
 public class SOIzmeniKolac extends ApstraktnaSistemskaOperacija {
 
+	/**
+     * Proverava ispravnost podataka kolaca koji se menja.
+     *
+     * Proverava da li je prosledjeni objekat instanca klase Kolac,
+     * da li je kolac izabran, da li je cena veca od nule i da li je
+     * opis kolaca unet.
+     *
+     * @param ado domenski objekat koji se validira
+     * @throws Exception ako prosledjeni objekat nije instanca klase Kolac,
+     * kolac nije izabran ili podaci kolaca nisu ispravni
+     */
     @Override
     protected void validacija(ApstraktniDomenskiObjekat ado) throws Exception {
         if (!(ado instanceof Kolac)) {
@@ -28,6 +47,12 @@ public class SOIzmeniKolac extends ApstraktnaSistemskaOperacija {
         }
     }
 
+    /**
+     * Menja podatke postojeceg kolaca u bazi podataka.
+     *
+     * @param ado kolac ciji se podaci menjaju
+     * @throws Exception ako dodje do greske prilikom izmene kolaca
+     */
     @Override
     protected void izvrsenje(ApstraktniDomenskiObjekat ado) throws Exception {
         DBBroker.getInstance().izmeni(ado);
