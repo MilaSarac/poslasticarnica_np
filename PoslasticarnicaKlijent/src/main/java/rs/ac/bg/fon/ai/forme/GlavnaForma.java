@@ -129,7 +129,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         btnObrisiStavku.setText("Obriši stavku");
         btnObrisiStavku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+            	btnObrisiStavkuActionPerformed(evt);
             }
         });
 
@@ -412,6 +412,21 @@ public class GlavnaForma extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,
                     "Količina mora biti ceo broj!");
         }
+    }
+    
+    private void btnObrisiStavkuActionPerformed(java.awt.event.ActionEvent evt) {
+
+        int selektovaniRed = tblStavke.getSelectedRow();
+
+        if (selektovaniRed == -1) {
+            JOptionPane.showMessageDialog(this, "Morate izabrati stavku koju želite da obrišete!");
+            return;
+        }
+
+        ModelTabeleStavkaRacuna model = (ModelTabeleStavkaRacuna) tblStavke.getModel();
+        model.obrisiStavku(selektovaniRed);
+
+        txtUkupanIznos.setText(String.valueOf(model.vratiUkupanIznos()));
     }
 
     /**
