@@ -5,6 +5,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import rs.ac.bg.fon.ai.domen.Kolac;
+import rs.ac.bg.fon.ai.domen.Kupac;
+import rs.ac.bg.fon.ai.domen.Mesto;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.sesija.Sesija;
 import rs.ac.bg.fon.ai.transfer.KlijentskiZahtev;
@@ -66,5 +68,31 @@ public class KlijentKontroler {
     
     public ArrayList<Kolac> pretraziKolace(Kolac kriterijum) throws Exception {
         return (ArrayList<Kolac>) posaljiZahtev(Operacije.PRETRAZI_KOLACE,kriterijum);
+    }
+    
+    // KUPAC
+    public ArrayList<Kupac> vratiSveKupce() throws Exception {
+        return (ArrayList<Kupac>) posaljiZahtev(Operacije.VRATI_SVE_KUPCE, new Kupac());
+    }
+    
+    public void dodajKupca(Kupac kupac) throws Exception {
+        posaljiZahtev(Operacije.DODAJ_KUPCA, kupac);
+    }
+    
+    public void promeniKupca(Kupac kupac) throws Exception {
+        posaljiZahtev(Operacije.PROMENI_KUPCA, kupac);
+    }
+    
+    public void obrisiKupca(Kupac kupac) throws Exception {
+        posaljiZahtev(Operacije.OBRISI_KUPCA, kupac);
+    }
+    
+    public ArrayList<Kupac> pretraziKupce(Kupac kupac) throws Exception {
+        return (ArrayList<Kupac>) posaljiZahtev(Operacije.PRETRAZI_KUPCE,kupac);
+    }
+    
+    // MESTO
+    public ArrayList<Mesto> vratiSvaMesta() throws Exception {
+        return (ArrayList<Mesto>) posaljiZahtev(Operacije.VRATI_SVA_MESTA, new Mesto());
     }
 }

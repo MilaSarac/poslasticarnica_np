@@ -3,13 +3,21 @@ package rs.ac.bg.fon.ai.kontroler;
 import java.util.ArrayList;
 
 import rs.ac.bg.fon.ai.domen.Kolac;
+import rs.ac.bg.fon.ai.domen.Kupac;
+import rs.ac.bg.fon.ai.domen.Mesto;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.so.kolac.SODodajKolac;
 import rs.ac.bg.fon.ai.so.kolac.SOIzmeniKolac;
 import rs.ac.bg.fon.ai.so.kolac.SOObrisiKolac;
 import rs.ac.bg.fon.ai.so.kolac.SOPretraziKolace;
 import rs.ac.bg.fon.ai.so.kolac.SOVratiSveKolace;
+import rs.ac.bg.fon.ai.so.kupac.SODodajKupca;
+import rs.ac.bg.fon.ai.so.kupac.SOObrisiKupca;
+import rs.ac.bg.fon.ai.so.kupac.SOPretraziKupce;
+import rs.ac.bg.fon.ai.so.kupac.SOPromeniKupca;
+import rs.ac.bg.fon.ai.so.kupac.SOVratiSveKupce;
 import rs.ac.bg.fon.ai.so.login.SOLogin;
+import rs.ac.bg.fon.ai.so.mesto.SOVratiSvaMesta;
 
 public class ServerKontroler {
     
@@ -61,6 +69,41 @@ public class ServerKontroler {
     public ArrayList<Kolac> pretraziKolace(Kolac kriterijum) throws Exception {
         SOPretraziKolace so = new SOPretraziKolace();
         so.izvrsi(kriterijum);
+        return so.getLista();
+    }
+    
+    // KUPAC
+    public ArrayList<Kupac> vratiSveKupce() throws Exception {
+        SOVratiSveKupce so = new SOVratiSveKupce();
+        so.izvrsi(new Kupac());
+        return so.getLista();
+    }
+    
+    public void dodajKupca(Kupac kupac) throws Exception {
+        SODodajKupca so = new SODodajKupca();
+        so.izvrsi(kupac);
+    }
+    
+    public void promeniKupca(Kupac kupac) throws Exception {
+        SOPromeniKupca so = new SOPromeniKupca();
+        so.izvrsi(kupac);
+    }
+    
+    public void obrisiKupca(Kupac kupac) throws Exception {
+        SOObrisiKupca so = new SOObrisiKupca();
+        so.izvrsi(kupac);
+    }
+    
+    public ArrayList<Kupac> pretraziKupce(Kupac kupac) throws Exception {
+        SOPretraziKupce so = new SOPretraziKupce();
+        so.izvrsi(kupac);
+        return so.getLista();
+    }
+    
+    // MESTO
+    public ArrayList<Mesto> vratiSvaMesta() throws Exception {
+        SOVratiSvaMesta so = new SOVratiSvaMesta();
+        so.izvrsi(new Mesto());
         return so.getLista();
     }
 }

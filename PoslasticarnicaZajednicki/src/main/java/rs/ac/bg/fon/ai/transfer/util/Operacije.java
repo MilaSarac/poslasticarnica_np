@@ -34,4 +34,28 @@ public interface Operacije {
      * Konstanta koja predstavlja operaciju pretrage kolaca.
      */
     public static final int PRETRAZI_KOLACE = 5;
+    /**
+     * Konstanta koja predstavlja operaciju za vracanje svih kupaca iz baze podataka.
+     */
+    public static final int VRATI_SVE_KUPCE = 6;
+    /**
+     * Konstanta koja predstavlja operaciju za dodavanje novog kupca u bazu podataka.
+     */
+    public static final int DODAJ_KUPCA = 7;
+    /**
+     * Konstanta koja predstavlja operaciju za promenu podataka o kupcu.
+     */
+    public static final int PROMENI_KUPCA = 8;
+    /**
+     * Konstanta koja predstavlja operaciju za brisanje kupca iz baze podataka.
+     */
+    public static final int OBRISI_KUPCA = 9;
+    /**
+     * Konstanta koja predstavlja operaciju za pretragu kupaca.
+     */
+    public static final int PRETRAZI_KUPCE = 10;
+    /**
+     * Konstanta koja predstavlja operaciju za vracanje svih mesta.
+     */
+    public static final int VRATI_SVA_MESTA = 11;
 }

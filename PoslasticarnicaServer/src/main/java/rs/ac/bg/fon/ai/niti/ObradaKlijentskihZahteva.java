@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import rs.ac.bg.fon.ai.domen.Kolac;
+import rs.ac.bg.fon.ai.domen.Kupac;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.kontroler.ServerKontroler;
 import rs.ac.bg.fon.ai.transfer.KlijentskiZahtev;
@@ -72,6 +73,27 @@ public class ObradaKlijentskihZahteva extends Thread {
                     so.setOdgovor(ServerKontroler.getInstance().pretraziKolace((Kolac) kz.getZahtev()));
                     break;
                     
+                case Operacije.VRATI_SVE_KUPCE:
+                    so.setOdgovor(ServerKontroler.getInstance().vratiSveKupce());
+                    break;
+                case Operacije.DODAJ_KUPCA:
+                    ServerKontroler.getInstance().dodajKupca((Kupac) kz.getZahtev());
+                    so.setOdgovor(null);
+                    so.setRezultat(RezultatOp.Uspeh);
+                    break;
+                case Operacije.PROMENI_KUPCA:
+                    ServerKontroler.getInstance().promeniKupca((Kupac) kz.getZahtev());
+                    break;
+                case Operacije.OBRISI_KUPCA:
+                    ServerKontroler.getInstance().obrisiKupca((Kupac) kz.getZahtev());
+                    break;
+                case Operacije.PRETRAZI_KUPCE:
+                    so.setOdgovor(ServerKontroler.getInstance().pretraziKupce((Kupac) kz.getZahtev()));
+                    break;
+                    
+                case Operacije.VRATI_SVA_MESTA:
+                    so.setOdgovor(ServerKontroler.getInstance().vratiSvaMesta());
+                    break;
                 default:
                     return null;
             }

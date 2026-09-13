@@ -317,7 +317,7 @@ public class Kupac extends ApstraktniDomenskiObjekat{
 
     @Override
     public String vrednostiZaPromeni() {
-        return " brojtelefona = '" + brojTelefona + "', email = '" + email + "', "
+        return " brojTelefona = '" + brojTelefona + "', email = '" + email + "', "
                 + "idMesto = " + mesto.getIdMesto() + " ";
     }
 
