@@ -212,7 +212,7 @@ public class StavkaRacuna extends ApstraktniDomenskiObjekat{
         return " JOIN racun r ON (r.idRacun = sr.idRacun) "
                 + " JOIN poslasticar p ON (p.idPoslasticar = r.idPoslasticar) "
                 + " JOIN kupac k ON (k.idKupac = r.idKupac) "
-                + " JOIN mesto m ON ON (m.idMesto = k.idMesto) "
+                + " JOIN mesto m ON (m.idMesto = k.idMesto) "
                 + " JOIN kolac ko ON (ko.idKolac = sr.idKolac) ";
     }
 
