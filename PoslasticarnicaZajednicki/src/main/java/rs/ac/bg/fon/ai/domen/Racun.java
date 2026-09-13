@@ -222,7 +222,7 @@ public class Racun extends ApstraktniDomenskiObjekat{
     public String join() {
         return " JOIN poslasticar p ON (p.idPoslasticar = r.idPoslasticar) "
                 + " JOIN kupac k ON (k.idKupac = r.idKupac) "
-                + " JOIN mesto m ON ON (m.idMesto = k.idMesto) ";
+                + " JOIN mesto m ON (m.idMesto = k.idMesto) ";
     }
     @Override
     public ArrayList<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws SQLException {

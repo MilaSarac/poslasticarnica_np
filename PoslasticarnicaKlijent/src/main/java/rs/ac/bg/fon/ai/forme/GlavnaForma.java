@@ -10,6 +10,7 @@ import javax.swing.border.TitledBorder;
 import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.domen.Kupac;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
+import rs.ac.bg.fon.ai.domen.Racun;
 import rs.ac.bg.fon.ai.domen.StavkaRacuna;
 import rs.ac.bg.fon.ai.forma.kupac.FormaNoviKupac;
 import rs.ac.bg.fon.ai.forma.kupac.FormaPretragaKupaca;
@@ -22,6 +23,7 @@ import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JComboBox;
 
@@ -101,7 +103,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         btnSacuvaj.setText("Sačuvaj račun");
         btnSacuvaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+            	btnSacuvajActionPerformed(evt);
             }
         });
 
@@ -428,6 +430,63 @@ public class GlavnaForma extends javax.swing.JFrame {
         model.obrisiStavku(selektovaniRed);
 
         txtUkupanIznos.setText(String.valueOf(model.vratiUkupanIznos()));
+    }
+    
+    private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {
+
+        try {
+
+            Kupac kupac = (Kupac) cmbKupac.getSelectedItem();
+
+            if (kupac == null) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Morate izabrati kupca!"
+                );
+                return;
+            }
+
+            ModelTabeleStavkaRacuna model =
+                    (ModelTabeleStavkaRacuna) tblStavke.getModel();
+
+            ArrayList<StavkaRacuna> stavke =
+                    model.getLista();
+
+            if (stavke == null || stavke.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Račun mora imati barem jednu stavku!"
+                );
+                return;
+            }
+
+            double ukupanIznos =
+                    model.vratiUkupanIznos();
+
+            Racun racun = new Racun(
+                    null,
+                    new Date(),
+                    ukupanIznos,
+                    ulogovaniPoslasticar,
+                    kupac,
+                    stavke
+            );
+
+            KlijentKontroler.getInstance().ubaciRacun(racun);
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Račun je uspešno sačuvan!"
+            );
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Greška prilikom čuvanja računa: "
+                            + ex.getMessage()
+            );
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.domen.Kupac;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
+import rs.ac.bg.fon.ai.domen.Racun;
 import rs.ac.bg.fon.ai.kontroler.ServerKontroler;
 import rs.ac.bg.fon.ai.transfer.KlijentskiZahtev;
 import rs.ac.bg.fon.ai.transfer.ServerskiOdgovor;
@@ -94,6 +95,12 @@ public class ObradaKlijentskihZahteva extends Thread {
                 case Operacije.VRATI_SVA_MESTA:
                     so.setOdgovor(ServerKontroler.getInstance().vratiSvaMesta());
                     break;
+                    
+                case Operacije.UBACI_RACUN:
+                    Racun racun = (Racun) kz.getZahtev();
+                    ServerKontroler.getInstance().ubaciRacun(racun);
+                    break;
+                    
                 default:
                     return null;
             }

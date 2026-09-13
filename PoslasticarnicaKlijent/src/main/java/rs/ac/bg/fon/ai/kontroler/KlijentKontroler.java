@@ -8,6 +8,7 @@ import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.domen.Kupac;
 import rs.ac.bg.fon.ai.domen.Mesto;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
+import rs.ac.bg.fon.ai.domen.Racun;
 import rs.ac.bg.fon.ai.sesija.Sesija;
 import rs.ac.bg.fon.ai.transfer.KlijentskiZahtev;
 import rs.ac.bg.fon.ai.transfer.ServerskiOdgovor;
@@ -94,5 +95,10 @@ public class KlijentKontroler {
     // MESTO
     public ArrayList<Mesto> vratiSvaMesta() throws Exception {
         return (ArrayList<Mesto>) posaljiZahtev(Operacije.VRATI_SVA_MESTA, new Mesto());
+    }
+    
+    // RACUN
+    public void ubaciRacun(Racun racun) throws Exception {
+        posaljiZahtev(Operacije.UBACI_RACUN, racun);
     }
 }

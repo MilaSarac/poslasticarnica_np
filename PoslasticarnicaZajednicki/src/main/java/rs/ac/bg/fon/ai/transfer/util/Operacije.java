@@ -58,4 +58,8 @@ public interface Operacije {
      * Konstanta koja predstavlja operaciju za vracanje svih mesta.
      */
     public static final int VRATI_SVA_MESTA = 11;
+    /**
+     * Konstanta koja predstavlja operaciju za ubacivanje novog racuna u bazu podataka.
+     */
+    public static final int UBACI_RACUN = 12;
 }

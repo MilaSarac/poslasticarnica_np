@@ -6,6 +6,7 @@ import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.domen.Kupac;
 import rs.ac.bg.fon.ai.domen.Mesto;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
+import rs.ac.bg.fon.ai.domen.Racun;
 import rs.ac.bg.fon.ai.so.kolac.SODodajKolac;
 import rs.ac.bg.fon.ai.so.kolac.SOIzmeniKolac;
 import rs.ac.bg.fon.ai.so.kolac.SOObrisiKolac;
@@ -18,6 +19,7 @@ import rs.ac.bg.fon.ai.so.kupac.SOPromeniKupca;
 import rs.ac.bg.fon.ai.so.kupac.SOVratiSveKupce;
 import rs.ac.bg.fon.ai.so.login.SOLogin;
 import rs.ac.bg.fon.ai.so.mesto.SOVratiSvaMesta;
+import rs.ac.bg.fon.ai.so.racun.SOUbaciRacun;
 
 public class ServerKontroler {
     
@@ -105,5 +107,11 @@ public class ServerKontroler {
         SOVratiSvaMesta so = new SOVratiSvaMesta();
         so.izvrsi(new Mesto());
         return so.getLista();
+    }
+    
+    // RACUN
+    public void ubaciRacun(Racun racun) throws Exception {
+        SOUbaciRacun operacija = new SOUbaciRacun();
+        operacija.izvrsi(racun);
     }
 }
