@@ -52,6 +52,12 @@ public class ObradaKlijentskihZahteva extends Thread {
                     Poslasticar ulogovani = ServerKontroler.getInstance().login(p);
                     so.setOdgovor(ulogovani);
                     break;
+                    
+                case Operacije.VRATI_SVE_KOLACE:
+                    so.setOdgovor(ServerKontroler.getInstance().vratiSveKolace());
+                    break;
+                    
+                    
                 default:
                     return null;
             }
