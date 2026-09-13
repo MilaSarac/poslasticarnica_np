@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.kontroler.ServerKontroler;
 import rs.ac.bg.fon.ai.transfer.KlijentskiZahtev;
@@ -56,7 +57,11 @@ public class ObradaKlijentskihZahteva extends Thread {
                 case Operacije.VRATI_SVE_KOLACE:
                     so.setOdgovor(ServerKontroler.getInstance().vratiSveKolace());
                     break;
-                    
+                case Operacije.DODAJ_KOLAC:
+                    ServerKontroler.getInstance().dodajKolac((Kolac) kz.getZahtev());
+                    so.setOdgovor(null);
+                    so.setRezultat(RezultatOp.Uspeh);
+                    break;    
                     
                 default:
                     return null;

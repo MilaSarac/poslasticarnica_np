@@ -3,6 +3,7 @@ package rs.ac.bg.fon.ai.forme.kolac;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -192,7 +193,40 @@ public class FormaKolac extends JFrame {
     }
 
     private void btnDodajActionPerformed() {
+        try {
+            String naziv = txtNaziv.getText();
+            String opis = txtOpis.getText();
 
+            if (naziv.isEmpty() || txtCena.getText().isEmpty() || opis.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Morate popuniti sva polja!");
+                return;
+            }
+
+            double cena = Double.parseDouble(txtCena.getText());
+
+            Kolac kolac = new Kolac(
+                    null,
+                    naziv,
+                    cena,
+                    opis
+            );
+
+            KlijentKontroler.getInstance().dodajKolac(kolac);
+
+            JOptionPane.showMessageDialog(this, "Kolač je uspešno dodat!");
+
+            popuniTabelu();
+
+            txtNaziv.setText("");
+            txtCena.setText("");
+            txtOpis.setText("");
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Cena mora biti broj!");
+
+        } catch (Exception ex) { 
+        	JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 
     private void btnIzmeniActionPerformed() {
