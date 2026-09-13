@@ -1,6 +1,7 @@
 package rs.ac.bg.fon.ai.forme;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -8,12 +9,14 @@ import javax.swing.border.TitledBorder;
 
 import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
+import rs.ac.bg.fon.ai.domen.StavkaRacuna;
 import rs.ac.bg.fon.ai.kontroler.KlijentKontroler;
 import rs.ac.bg.fon.ai.modeli.ModelTabeleStavkaRacuna;
 import rs.ac.bg.fon.ai.sesija.Sesija;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -26,7 +29,6 @@ public class GlavnaForma extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
 	private Poslasticar ulogovaniPoslasticar;
 	private double ukupanIznos;
-	private JLabel lblUlogovani;
 
     /**
      * Creates new form GlavnaForma
@@ -63,7 +65,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         cmbKolac = new javax.swing.JComboBox();
-        txtKoličina = new javax.swing.JTextField();
+        txtKolicina = new javax.swing.JTextField();
         btnDodajStavku = new javax.swing.JButton();
         btnObrisiStavku = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -113,14 +115,14 @@ public class GlavnaForma extends javax.swing.JFrame {
         cmbKolac.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbKolac.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                
+            	
             }
         });
 
         btnDodajStavku.setText("Dodaj stavku");
         btnDodajStavku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+            	btnDodajStavkuActionPerformed(evt); 
             }
         });
 
@@ -163,7 +165,7 @@ public class GlavnaForma extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cmbKolac, 0, 455, Short.MAX_VALUE)
-                            .addComponent(txtKoličina))))
+                            .addComponent(txtKolicina))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -174,7 +176,7 @@ public class GlavnaForma extends javax.swing.JFrame {
                     .addComponent(cmbKolac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtKoličina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -357,7 +359,60 @@ public class GlavnaForma extends javax.swing.JFrame {
 
         pack();
     }                   
-                                                                                   
+    
+    private void btnDodajStavkuActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            Kolac kolac = (Kolac) cmbKolac.getSelectedItem();
+
+            if (kolac == null) {
+                JOptionPane.showMessageDialog(this, "Morate izabrati kolač!");
+                return;
+            }
+
+            if (txtKolicina.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Morate uneti količinu!");
+                return;
+            }
+
+            int kolicina = Integer.parseInt(txtKolicina.getText());
+
+            if (kolicina <= 0) {
+                JOptionPane.showMessageDialog(this, "Količina mora biti veća od nula!");
+                return;
+            }
+
+            ModelTabeleStavkaRacuna model = (ModelTabeleStavkaRacuna) tblStavke.getModel();
+
+            if (model.postojiKolac(kolac)) {
+                JOptionPane.showMessageDialog(this, "Izabrani kolač je već dodat u račun!");
+                return;
+            }
+
+            double cena = kolac.getCena();
+            double iznos = cena * kolicina;
+
+            StavkaRacuna stavka = new StavkaRacuna(
+                    null,
+                    0,
+                    cena,
+                    kolicina,
+                    iznos,
+                    kolac
+            );
+
+            model.dodajStavku(stavka);
+
+            txtUkupanIznos.setText(
+                    String.valueOf(model.vratiUkupanIznos())
+            );
+
+            txtKolicina.setText("");
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Količina mora biti ceo broj!");
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -421,8 +476,9 @@ public class GlavnaForma extends javax.swing.JFrame {
     private javax.swing.JMenu mnSmena;
     private javax.swing.JTable tblStavke;
     private javax.swing.JTextField txtUkupanIznos;
-    private javax.swing.JTextField txtKoličina;
+    private javax.swing.JTextField txtKolicina;
     private JLabel jLabel3_1;
+	private javax.swing.JLabel lblUlogovani;
     // End of variables declaration                   
 
     private void popuniKolace() {
