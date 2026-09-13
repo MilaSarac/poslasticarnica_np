@@ -63,4 +63,8 @@ public class KlijentKontroler {
     public void obrisiKolac(Kolac kolac) throws Exception {
         posaljiZahtev(Operacije.OBRISI_KOLAC, kolac);
     }
+    
+    public ArrayList<Kolac> pretraziKolace(Kolac kriterijum) throws Exception {
+        return (ArrayList<Kolac>) posaljiZahtev(Operacije.PRETRAZI_KOLACE,kriterijum);
+    }
 }

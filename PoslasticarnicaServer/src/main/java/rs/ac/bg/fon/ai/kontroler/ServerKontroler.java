@@ -7,6 +7,7 @@ import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.so.kolac.SODodajKolac;
 import rs.ac.bg.fon.ai.so.kolac.SOIzmeniKolac;
 import rs.ac.bg.fon.ai.so.kolac.SOObrisiKolac;
+import rs.ac.bg.fon.ai.so.kolac.SOPretraziKolace;
 import rs.ac.bg.fon.ai.so.kolac.SOVratiSveKolace;
 import rs.ac.bg.fon.ai.so.login.SOLogin;
 
@@ -55,5 +56,11 @@ public class ServerKontroler {
     public void obrisiKolac(Kolac kolac) throws Exception {
         SOObrisiKolac so = new SOObrisiKolac();
         so.izvrsi(kolac);
+    }
+    
+    public ArrayList<Kolac> pretraziKolace(Kolac kriterijum) throws Exception {
+        SOPretraziKolace so = new SOPretraziKolace();
+        so.izvrsi(kriterijum);
+        return so.getLista();
     }
 }

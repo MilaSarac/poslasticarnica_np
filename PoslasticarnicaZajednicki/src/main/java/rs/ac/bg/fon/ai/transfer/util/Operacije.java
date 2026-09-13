@@ -30,4 +30,8 @@ public interface Operacije {
      * Konstanta koja predstavlja operaciju brisanja kolaca iz sistema.
      */
     public static final int OBRISI_KOLAC = 4;
+    /**
+     * Konstanta koja predstavlja operaciju pretrage kolaca.
+     */
+    public static final int PRETRAZI_KOLACE = 5;
 }

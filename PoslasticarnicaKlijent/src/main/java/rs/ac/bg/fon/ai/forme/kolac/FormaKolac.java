@@ -318,6 +318,23 @@ public class FormaKolac extends JFrame {
 
     private void btnPretraziActionPerformed() {
 
+        try {
+
+            String naziv = txtPretraga.getText();
+
+            Kolac kriterijum = new Kolac();
+            kriterijum.setNaziv(naziv);
+
+            ArrayList<Kolac> kolaci = KlijentKontroler.getInstance().pretraziKolace(kriterijum);
+
+            ModelTabeleKolac model = (ModelTabeleKolac) tblKolaci.getModel();
+            model.setLista(kolaci);
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage());
+        }
     }
     
     private void popuniTabelu() {
