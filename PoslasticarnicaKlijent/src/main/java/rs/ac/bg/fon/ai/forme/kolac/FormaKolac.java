@@ -8,6 +8,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import rs.ac.bg.fon.ai.modeli.ModelTabeleKolac;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -41,6 +44,7 @@ public class FormaKolac extends JFrame {
     public FormaKolac() {
         initialize();
         setLocationRelativeTo(null);
+        tblKolaci.setModel(new ModelTabeleKolac());
     }
 
     private void initialize() {
