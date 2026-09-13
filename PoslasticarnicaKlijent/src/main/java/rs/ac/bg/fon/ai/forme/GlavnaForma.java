@@ -8,8 +8,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
 import rs.ac.bg.fon.ai.domen.Kolac;
+import rs.ac.bg.fon.ai.domen.Kupac;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.domen.StavkaRacuna;
+import rs.ac.bg.fon.ai.forma.kupac.FormaNoviKupac;
+import rs.ac.bg.fon.ai.forma.kupac.FormaPretragaKupaca;
 import rs.ac.bg.fon.ai.forme.kolac.FormaKolac;
 import rs.ac.bg.fon.ai.kontroler.KlijentKontroler;
 import rs.ac.bg.fon.ai.modeli.ModelTabeleStavkaRacuna;
@@ -44,6 +47,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         Sesija.getInstance().setGlavnaForma(this);
         
         popuniKolace();
+        popuniKupce();
         
         setTitle("Poslasticarnica");
         txtUkupanIznos.setEditable(false);
@@ -85,6 +89,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         miPretragaEvidencije = new javax.swing.JRadioButtonMenuItem();
         mnOdjava = new javax.swing.JMenu();
         miOdjava = new javax.swing.JRadioButtonMenuItem();
+        cmbKupac = new JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,7 +123,14 @@ public class GlavnaForma extends javax.swing.JFrame {
             	
             }
         });
-
+        
+        cmbKupac.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbKupac.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            	
+            }
+        });
+        
         btnDodajStavku.setText("Dodaj stavku");
         btnDodajStavku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,8 +200,6 @@ public class GlavnaForma extends javax.swing.JFrame {
         
         jLabel3_1 = new JLabel();
         jLabel3_1.setText("Kupac:");
-        
-        JComboBox cmbKupac = new JComboBox();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
@@ -243,7 +253,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         miNoviKupac.setText("Novi kupac");
         miNoviKupac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+                miNoviKupacActionPerformed(evt);
             }
         });
         mnKupac.add(miNoviKupac);
@@ -252,7 +262,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         miPretraga.setText("Pretraga");
         miPretraga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+                miPretragaActionPerformed(evt);
             }
         });
         mnKupac.add(miPretraga);
@@ -334,15 +344,15 @@ public class GlavnaForma extends javax.swing.JFrame {
         					.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 817, Short.MAX_VALUE))
         				.addGroup(layout.createSequentialGroup()
         					.addGap(20)
-        					.addComponent(lblUlogovani, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)))
+        					.addComponent(lblUlogovani, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)))
         			.addContainerGap())
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
         			.addGap(18)
-        			.addComponent(lblUlogovani, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
-        			.addGap(14)
+        			.addComponent(lblUlogovani)
+        			.addGap(13)
         			.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -459,6 +469,7 @@ public class GlavnaForma extends javax.swing.JFrame {
     private javax.swing.JButton btnObrisiStavku;
     private javax.swing.JButton btnSacuvaj;
     private javax.swing.JComboBox cmbKolac;
+    private javax.swing.JComboBox cmbKupac;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -498,8 +509,35 @@ public class GlavnaForma extends javax.swing.JFrame {
         }
     } //Logger.getLogger(FormaNoviPolaznik.class.getName()).log(Level.SEVERE, null, ex);
     
+    private void popuniKupce() {
+        try {
+
+            ArrayList<Kupac> kupci =
+                    KlijentKontroler.getInstance().vratiSveKupce();
+
+            cmbKupac.removeAllItems();
+
+            for (Kupac kupac : kupci) {
+                cmbKupac.addItem(kupac);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     private void mnKolacActionPerformed(java.awt.event.ActionEvent evt) {
         FormaKolac forma = new FormaKolac();
+        forma.setVisible(true);
+    }
+    
+    private void miNoviKupacActionPerformed(java.awt.event.ActionEvent evt) {
+        FormaNoviKupac forma = new FormaNoviKupac(this, true);
+        forma.setVisible(true);
+    }
+    
+    private void miPretragaActionPerformed(java.awt.event.ActionEvent evt) {
+        FormaPretragaKupaca forma = new FormaPretragaKupaca(this, true);
         forma.setVisible(true);
     }
 }
