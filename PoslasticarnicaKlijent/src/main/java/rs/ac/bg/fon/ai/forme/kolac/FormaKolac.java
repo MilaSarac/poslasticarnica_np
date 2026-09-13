@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FormaKolac extends JFrame {
 
@@ -46,6 +48,8 @@ public class FormaKolac extends JFrame {
 
     private JScrollPane scrollPane;
     private JTable tblKolaci;
+    
+    private Kolac izabraniKolac;
 
     public FormaKolac() {
         initialize();
@@ -112,6 +116,12 @@ public class FormaKolac extends JFrame {
         scrollPane = new JScrollPane();
 
         tblKolaci = new JTable();
+        tblKolaci.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		tblKolaciMouseClicked(e);
+        	}
+        });
 
         tblKolaci.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {
@@ -231,6 +241,42 @@ public class FormaKolac extends JFrame {
 
     private void btnIzmeniActionPerformed() {
 
+        try {
+
+            if (izabraniKolac == null) {
+                JOptionPane.showMessageDialog(this, "Morate izabrati kolač iz tabele!");
+                return;
+            }
+
+            if (txtCena.getText().isEmpty() || txtOpis.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Morate popuniti sva polja!");
+                return;
+            }
+
+            double cena = Double.parseDouble(txtCena.getText());
+
+            izabraniKolac.setCena(cena);
+            izabraniKolac.setOpis(txtOpis.getText());
+
+            KlijentKontroler.getInstance().izmeniKolac(izabraniKolac);
+
+            JOptionPane.showMessageDialog(this, "Kolač je uspešno izmenjen!");
+
+            popuniTabelu();
+
+            txtNaziv.setText("");
+            txtCena.setText("");
+            txtOpis.setText("");
+
+            txtNaziv.setEditable(true);
+
+            izabraniKolac = null;
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Cena mora biti broj!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 
     private void btnObrisiActionPerformed() {
@@ -253,5 +299,24 @@ public class FormaKolac extends JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+    
+    private void tblKolaciMouseClicked(java.awt.event.MouseEvent evt) {
+
+        int selektovaniRed = tblKolaci.getSelectedRow();
+
+        if (selektovaniRed == -1) {
+            return;
+        }
+
+        ModelTabeleKolac model = (ModelTabeleKolac) tblKolaci.getModel();
+
+        izabraniKolac = model.getKolac(selektovaniRed);
+
+        txtNaziv.setText(izabraniKolac.getNaziv());
+        txtCena.setText(String.valueOf(izabraniKolac.getCena()));
+        txtOpis.setText(izabraniKolac.getOpis());
+
+        txtNaziv.setEditable(false);
     }
 }

@@ -22,4 +22,8 @@ public interface Operacije {
      * Konstanta koja predstavlja operaciju dodavanja kolaca u sistem.
      */
     public static final int DODAJ_KOLAC = 2;
+    /**
+     * Konstanta koja predstavlja operaciju izmene kolaca u sistemu.
+     */
+    public static final int IZMENI_KOLAC = 3;
 }

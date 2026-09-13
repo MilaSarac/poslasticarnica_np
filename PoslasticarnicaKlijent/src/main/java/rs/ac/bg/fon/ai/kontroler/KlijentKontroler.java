@@ -55,4 +55,8 @@ public class KlijentKontroler {
     public void dodajKolac(Kolac kolac) throws Exception {
         posaljiZahtev(Operacije.DODAJ_KOLAC, kolac);
     }
+    
+    public void izmeniKolac(Kolac kolac) throws Exception {
+        posaljiZahtev(Operacije.IZMENI_KOLAC, kolac);
+    }
 }
