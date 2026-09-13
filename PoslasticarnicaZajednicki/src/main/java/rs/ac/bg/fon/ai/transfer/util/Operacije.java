@@ -14,4 +14,24 @@ public interface Operacije {
      * Konstanta koja predstavlja operaciju prijavljivanja korisnika na sistem.
      */
     public static final int LOGIN = 0;
+    /**
+     * Konstanta koja predstavlja operaciju vracanja svih kolaca iz sistema.
+     */
+    public static final int VRATI_SVE_KOLACE = 1;
+    /**
+     * Konstanta koja predstavlja operaciju dodavanja kolaca u sistem.
+     */
+    public static final int DODAJ_KOLAC = 2;
+    /**
+     * Konstanta koja predstavlja operaciju izmene kolaca u sistemu.
+     */
+    public static final int IZMENI_KOLAC = 3;
+    /**
+     * Konstanta koja predstavlja operaciju brisanja kolaca iz sistema.
+     */
+    public static final int OBRISI_KOLAC = 4;
+    /**
+     * Konstanta koja predstavlja operaciju pretrage kolaca.
+     */
+    public static final int PRETRAZI_KOLACE = 5;
 }

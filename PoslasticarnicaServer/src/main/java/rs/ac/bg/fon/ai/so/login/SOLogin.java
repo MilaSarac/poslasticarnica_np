@@ -8,10 +8,29 @@ import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.kontroler.ServerKontroler;
 import rs.ac.bg.fon.ai.sistemskaOperacija.ApstraktnaSistemskaOperacija;
 
+/**
+ * Sistemska operacija koja omogucava prijavljivanje poslasticara na sistem.
+ *
+ * Operacija proverava da li je prosledjen odgovarajuci domenski objekat,
+ * da li je poslasticar vec prijavljen na sistem i da li postoje ispravni
+ * podaci za prijavljivanje u bazi podataka.
+ *
+ * @author Mila
+ */
 public class SOLogin extends ApstraktnaSistemskaOperacija{
 
+	/**
+     * Poslasticar koji je uspesno prijavljen na sistem.
+     */
     private Poslasticar ulogovani;
 
+    /**
+     * Proverava da li je prosledjeni objekat instanca klase Poslasticar
+     * i da li je poslasticar vec prijavljen na sistem.
+     *
+     * @param ado domenski objekat koji se validira
+     * @throws Exception ako prosledjeni objekat nije instanca klase Poslasticar ili ako je poslasticar vec prijavljen na sistem
+     */
     @Override
     protected void validacija(ApstraktniDomenskiObjekat ado) throws Exception {
         if (!(ado instanceof Poslasticar)) {
@@ -25,6 +44,16 @@ public class SOLogin extends ApstraktnaSistemskaOperacija{
         }
     }
 
+    /**
+     * Vrsi prijavljivanje poslasticara na sistem.
+     *
+     * Iz baze podataka se ucitavaju poslasticari, nakon cega se proveravaju
+     * korisnicko ime i sifra. Ako su podaci ispravni, poslasticar se cuva
+     * kao ulogovani korisnik i dodaje u listu ulogovanih poslasticara.
+     *
+     * @param ado poslasticar sa unetim korisnickim imenom i sifrom
+     * @throws Exception ako korisnicko ime i sifra nisu ispravni
+     */
     @Override
     protected void izvrsenje(ApstraktniDomenskiObjekat ado) throws Exception {
         Poslasticar p = (Poslasticar) ado;
@@ -44,6 +73,11 @@ public class SOLogin extends ApstraktnaSistemskaOperacija{
         throw new Exception("Korisničko ime i šifra nisu ispravni.");
     }
 
+    /**
+     * Vraca poslasticara koji je uspesno prijavljen na sistem.
+     *
+     * @return ulogovani poslasticar
+     */
     public Poslasticar getUlogovani() {
         return ulogovani;
     }

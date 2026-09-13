@@ -202,7 +202,7 @@ public class Kolac extends ApstraktniDomenskiObjekat{
 
     @Override
     public String vrednostiZaDodaj() {
-        return "'" + naziv + "', '" + cena + "', '" + opis + "' ";
+        return "'" + naziv + "', " + cena + ", '" + opis + "'";
     }
 
     @Override
