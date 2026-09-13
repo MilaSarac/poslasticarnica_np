@@ -18,6 +18,7 @@ import rs.ac.bg.fon.ai.so.kupac.SOPretraziKupce;
 import rs.ac.bg.fon.ai.so.kupac.SOPromeniKupca;
 import rs.ac.bg.fon.ai.so.kupac.SOVratiSveKupce;
 import rs.ac.bg.fon.ai.so.login.SOLogin;
+import rs.ac.bg.fon.ai.so.logout.SOLogout;
 import rs.ac.bg.fon.ai.so.mesto.SOVratiSvaMesta;
 import rs.ac.bg.fon.ai.so.racun.SOUbaciRacun;
 
@@ -113,5 +114,11 @@ public class ServerKontroler {
     public void ubaciRacun(Racun racun) throws Exception {
         SOUbaciRacun operacija = new SOUbaciRacun();
         operacija.izvrsi(racun);
+    }
+    
+    // LOGOUT
+    public void logout(Poslasticar poslasticar) throws Exception {
+        SOLogout operacija = new SOLogout();
+        operacija.izvrsi(poslasticar);
     }
 }

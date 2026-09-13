@@ -325,7 +325,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         miOdjava.setText("Odjavi se");
         miOdjava.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+            	 miOdjavaActionPerformed(evt);
             }
         });
         mnOdjava.add(miOdjava);
@@ -598,6 +598,36 @@ public class GlavnaForma extends javax.swing.JFrame {
     private void miPretragaActionPerformed(java.awt.event.ActionEvent evt) {
         FormaPretragaKupaca forma = new FormaPretragaKupaca(this, true);
         forma.setVisible(true);
+    }
+    
+    private void miOdjavaActionPerformed(java.awt.event.ActionEvent evt) {
+
+        try {
+
+            KlijentKontroler.getInstance()
+                    .logout(ulogovaniPoslasticar);
+
+            Sesija.getInstance()
+                    .setUlogovaniPoslasticar(null);
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Uspešno ste se odjavili sa sistema!"
+            );
+
+            this.dispose();
+
+            LoginForma loginForma = new LoginForma();
+            loginForma.setVisible(true);
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Greška prilikom odjavljivanja: "
+                            + ex.getMessage()
+            );
+        }
     }
 }
 

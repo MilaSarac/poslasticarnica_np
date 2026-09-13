@@ -62,4 +62,8 @@ public interface Operacije {
      * Konstanta koja predstavlja operaciju za ubacivanje novog racuna u bazu podataka.
      */
     public static final int UBACI_RACUN = 12;
+    /**
+     * Konstanta koja predstavlja operaciju odjavljivanja korisnika sa sistema.
+     */
+    public static final int LOGOUT = 13;
 }

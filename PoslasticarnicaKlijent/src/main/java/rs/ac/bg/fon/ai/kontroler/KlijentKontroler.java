@@ -101,4 +101,9 @@ public class KlijentKontroler {
     public void ubaciRacun(Racun racun) throws Exception {
         posaljiZahtev(Operacije.UBACI_RACUN, racun);
     }
+    
+    // LOGOUT
+    public void logout(Poslasticar poslasticar) throws Exception {
+        posaljiZahtev(Operacije.LOGOUT, poslasticar);
+    }
 }

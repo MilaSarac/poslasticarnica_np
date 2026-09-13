@@ -101,6 +101,11 @@ public class ObradaKlijentskihZahteva extends Thread {
                     ServerKontroler.getInstance().ubaciRacun(racun);
                     break;
                     
+                case Operacije.LOGOUT:
+                    Poslasticar poslasticar = (Poslasticar) kz.getZahtev();
+                    ServerKontroler.getInstance().logout(poslasticar);
+                    break;
+                    
                 default:
                     return null;
             }
