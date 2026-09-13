@@ -2,7 +2,9 @@ package rs.ac.bg.fon.ai.kontroler;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
+import rs.ac.bg.fon.ai.domen.Kolac;
 import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.sesija.Sesija;
 import rs.ac.bg.fon.ai.transfer.KlijentskiZahtev;
@@ -40,7 +42,13 @@ public class KlijentKontroler {
         }
     }
     
+    // LOGIN
     public Poslasticar login(Poslasticar p) throws Exception {
         return (Poslasticar) posaljiZahtev(Operacije.LOGIN, p);
+    }
+    
+    // KOLAC
+    public ArrayList<Kolac> vratiSveKolace() throws Exception {
+        return (ArrayList<Kolac>) posaljiZahtev(Operacije.VRATI_SVE_KOLACE, new Kolac());
     }
 }
