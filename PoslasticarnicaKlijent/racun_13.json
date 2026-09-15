@@ -1,0 +1,62 @@
+{
+  "idRacun": 13,
+  "datumIzdavanja": "Sep 15, 2026, 8:14:56 PM",
+  "ukupanIznos": 1970.0,
+  "poslasticar": {
+    "idPoslasticar": 1,
+    "ime": "Ana",
+    "prezime": "Anic",
+    "korisnickoIme": "ana",
+    "sifra": "ana123",
+    "datumZaposlenja": "Aug 6, 2026"
+  },
+  "kupac": {
+    "idKupac": 59,
+    "ime": "Aleksa",
+    "prezime": "Aleksic",
+    "brojTelefona": "0691919190",
+    "email": "aleksa@gmail.com",
+    "mesto": {
+      "idMesto": 2,
+      "naziv": "Nis"
+    }
+  },
+  "stavkeRacuna": [
+    {
+      "rb": 1,
+      "cena": 390.0,
+      "kolicina": 2,
+      "iznos": 780.0,
+      "kolac": {
+        "idKolac": 1,
+        "naziv": "Tiramisu",
+        "cena": 390.0,
+        "opis": "Italijanski desert sa kafom, mascarpone kremom i kakaom."
+      }
+    },
+    {
+      "rb": 2,
+      "cena": 420.0,
+      "kolicina": 2,
+      "iznos": 840.0,
+      "kolac": {
+        "idKolac": 3,
+        "naziv": "Cheesecake",
+        "cena": 420.0,
+        "opis": "Kremasti kolač sa sirom i prelivom od maline."
+      }
+    },
+    {
+      "rb": 3,
+      "cena": 350.0,
+      "kolicina": 1,
+      "iznos": 350.0,
+      "kolac": {
+        "idKolac": 7,
+        "naziv": "Čokoladni brownie",
+        "cena": 350.0,
+        "opis": "Intenzivno čokoladni kolač sa mekanom i sočnom sredinom."
+      }
+    }
+  ]
+}

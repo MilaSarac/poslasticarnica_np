@@ -98,7 +98,7 @@ public class ObradaKlijentskihZahteva extends Thread {
                     
                 case Operacije.UBACI_RACUN:
                     Racun racun = (Racun) kz.getZahtev();
-                    ServerKontroler.getInstance().ubaciRacun(racun);
+                    so.setOdgovor(ServerKontroler.getInstance().ubaciRacun(racun));
                     break;
                     
                 case Operacije.LOGOUT:

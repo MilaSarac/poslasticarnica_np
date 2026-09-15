@@ -1,0 +1,50 @@
+{
+  "idRacun": 14,
+  "datumIzdavanja": "Sep 15, 2026, 8:23:00 PM",
+  "ukupanIznos": 1390.0,
+  "poslasticar": {
+    "idPoslasticar": 1,
+    "ime": "Ana",
+    "prezime": "Anic",
+    "korisnickoIme": "ana",
+    "sifra": "ana123",
+    "datumZaposlenja": "Aug 6, 2026"
+  },
+  "kupac": {
+    "idKupac": 38,
+    "ime": "Mila",
+    "prezime": "Sarac",
+    "brojTelefona": "0601122334",
+    "email": "mila@gmail.com",
+    "mesto": {
+      "idMesto": 4,
+      "naziv": "Kragujevac"
+    }
+  },
+  "stavkeRacuna": [
+    {
+      "rb": 1,
+      "cena": 450.0,
+      "kolicina": 1,
+      "iznos": 450.0,
+      "kolac": {
+        "idKolac": 2,
+        "naziv": "\nČokoladna torta",
+        "cena": 450.0,
+        "opis": "Sočna čokoladna torta sa bogatim čokoladnim filom."
+      }
+    },
+    {
+      "rb": 2,
+      "cena": 470.0,
+      "kolicina": 2,
+      "iznos": 940.0,
+      "kolac": {
+        "idKolac": 5,
+        "naziv": "Reforma torta",
+        "cena": 470.0,
+        "opis": "Torta sa orasima i bogatim čokoladnim filom."
+      }
+    }
+  ]
+}

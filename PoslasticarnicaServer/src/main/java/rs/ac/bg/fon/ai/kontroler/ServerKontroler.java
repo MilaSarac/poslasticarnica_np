@@ -111,9 +111,10 @@ public class ServerKontroler {
     }
     
     // RACUN
-    public void ubaciRacun(Racun racun) throws Exception {
+    public Racun ubaciRacun(Racun racun) throws Exception {
         SOUbaciRacun operacija = new SOUbaciRacun();
         operacija.izvrsi(racun);
+        return racun;
     }
     
     // LOGOUT

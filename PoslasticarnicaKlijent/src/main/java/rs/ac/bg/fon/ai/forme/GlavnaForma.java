@@ -15,6 +15,7 @@ import rs.ac.bg.fon.ai.domen.StavkaRacuna;
 import rs.ac.bg.fon.ai.forma.kupac.FormaNoviKupac;
 import rs.ac.bg.fon.ai.forma.kupac.FormaPretragaKupaca;
 import rs.ac.bg.fon.ai.forme.kolac.FormaKolac;
+import rs.ac.bg.fon.ai.json.JsonUtil;
 import rs.ac.bg.fon.ai.kontroler.KlijentKontroler;
 import rs.ac.bg.fon.ai.modeli.ModelTabeleStavkaRacuna;
 import rs.ac.bg.fon.ai.sesija.Sesija;
@@ -406,9 +407,12 @@ public class GlavnaForma extends javax.swing.JFrame {
 
             Racun racun = new Racun(null,new Date(),ukupanIznos,ulogovaniPoslasticar,kupac,stavke);
 
-            KlijentKontroler.getInstance().ubaciRacun(racun);
+            Racun sacuvaniRacun = KlijentKontroler.getInstance().ubaciRacun(racun);
 
-            JOptionPane.showMessageDialog(this,"Račun je uspešno sačuvan!");
+            racun.setIdRacun(sacuvaniRacun.getIdRacun());
+            JsonUtil.sacuvajRacunUJSON(racun);
+            
+            JOptionPane.showMessageDialog(this,"Račun je uspešno sačuvan u bazi i JSON fajlu!");
 
         } catch (Exception ex) {
 
@@ -514,6 +518,7 @@ public class GlavnaForma extends javax.swing.JFrame {
     private void miNoviKupacActionPerformed(java.awt.event.ActionEvent evt) {
         FormaNoviKupac forma = new FormaNoviKupac(this, true);
         forma.setVisible(true);
+        popuniKupce();
     }
     
     private void miPretragaActionPerformed(java.awt.event.ActionEvent evt) {

@@ -98,8 +98,8 @@ public class KlijentKontroler {
     }
     
     // RACUN
-    public void ubaciRacun(Racun racun) throws Exception {
-        posaljiZahtev(Operacije.UBACI_RACUN, racun);
+    public Racun ubaciRacun(Racun racun) throws Exception {
+        return (Racun) posaljiZahtev(Operacije.UBACI_RACUN, racun);
     }
     
     // LOGOUT
