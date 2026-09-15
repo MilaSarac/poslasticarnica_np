@@ -22,26 +22,15 @@ class SOLogoutTest {
 
         operacija = new SOLogout();
 
-        poslasticar = new Poslasticar(
-                1L,
-                "Mila",
-                "Sarac",
-                "mila",
-                "123",
-                new Date()
-        );
+        poslasticar = new Poslasticar(1L, "Mila", "Sarac", "mila", "123", new Date());
 
-        ServerKontroler.getInstance()
-                .getUlogovaniPoslasticari()
-                .clear();
+        ServerKontroler.getInstance().getUlogovaniPoslasticari().clear();
     }
 
     @AfterEach
     void tearDown() {
 
-        ServerKontroler.getInstance()
-                .getUlogovaniPoslasticari()
-                .clear();
+        ServerKontroler.getInstance().getUlogovaniPoslasticari().clear();
 
         operacija = null;
         poslasticar = null;
@@ -50,48 +39,24 @@ class SOLogoutTest {
     @Test
     void testLogout() throws Exception {
 
-        ServerKontroler.getInstance()
-                .getUlogovaniPoslasticari()
-                .add(poslasticar);
+        ServerKontroler.getInstance().getUlogovaniPoslasticari().add(poslasticar);
 
-        assertTrue(
-                ServerKontroler.getInstance()
-                        .getUlogovaniPoslasticari()
-                        .contains(poslasticar)
-        );
+        assertTrue(ServerKontroler.getInstance().getUlogovaniPoslasticari().contains(poslasticar));
 
-        assertDoesNotThrow(
-                () -> operacija.izvrsi(poslasticar)
-        );
-
-        assertFalse(
-                ServerKontroler.getInstance()
-                        .getUlogovaniPoslasticari()
-                        .contains(poslasticar)
-        );
+        assertDoesNotThrow(() -> operacija.izvrsi(poslasticar));
+        assertFalse(ServerKontroler.getInstance().getUlogovaniPoslasticari().contains(poslasticar));
     }
 
     @Test
     void testPogresanTipObjekta() {
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(new Kolac())
-        );
+        assertThrows(Exception.class, () -> operacija.izvrsi(new Kolac()));
     }
 
     @Test
     void testPoslasticarNijeUlogovan() {
 
-        assertFalse(
-                ServerKontroler.getInstance()
-                        .getUlogovaniPoslasticari()
-                        .contains(poslasticar)
-        );
-
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(poslasticar)
-        );
+        assertFalse(ServerKontroler.getInstance().getUlogovaniPoslasticari().contains(poslasticar));
+        assertThrows(Exception.class, () -> operacija.izvrsi(poslasticar));
     }
 }

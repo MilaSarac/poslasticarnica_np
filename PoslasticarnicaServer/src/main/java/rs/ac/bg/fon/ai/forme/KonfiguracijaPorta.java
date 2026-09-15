@@ -100,10 +100,7 @@ public class KonfiguracijaPorta extends javax.swing.JFrame {
         this.dispose();
     }                                         
 
-    private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        //Ova metoda vrši validaciju korisničkog unosa za mrežni port, čuva ga u konfiguracioni fajl radi perzistencije, 
-        //a zatim instancira i pokreće serversku nit (PokreniServer). Takođe, ona koristi referencu na roditeljsku formu (parent) 
-        //kako bi vizuelno ažurirala status servera u glavnom korisničkom interfejsu
+    private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             int port = Integer.parseInt(txtPort.getText().trim());
             if (port < 0 || port > 65535) {
@@ -123,11 +120,10 @@ public class KonfiguracijaPorta extends javax.swing.JFrame {
             prop.setProperty("port", String.valueOf(port));
 
             try (OutputStream out = Files.newOutputStream(cfg)) {
-                prop.store(out, "Ažurirana konfiguracija porta");//Trajno upisuje sve podatke iz memorije na disk. Drugi parametar je komentar koji će pisati na vrhu fajla.
+                prop.store(out, "Ažurirana konfiguracija porta");
             }
 
-            PokreniServer noviServer = new PokreniServer(port);//Pravi objekat klase koja je zadužena za podizanje servera. Šalje joj port koji smo upravo sačuvali.
-            //start - Pokreće server u novoj niti. Time se omogućava da server čeka klijente, a da prozor i dalje reaguje na klikove (da se ne "zaledi").
+            PokreniServer noviServer = new PokreniServer(port);
             noviServer.start();
             parent.azurirajStatus(noviServer, port); 
 

@@ -331,9 +331,7 @@ public class FormaKolac extends JFrame {
             model.setLista(kolaci);
 
         } catch (Exception ex) {
-
-            JOptionPane.showMessageDialog(this,
-                    ex.getMessage());
+            JOptionPane.showMessageDialog(this,ex.getMessage());
         }
     }
     
@@ -341,8 +339,7 @@ public class FormaKolac extends JFrame {
         try {
             ArrayList<Kolac> kolaci = KlijentKontroler.getInstance().vratiSveKolace();
 
-            ModelTabeleKolac model =
-                    (ModelTabeleKolac) tblKolaci.getModel();
+            ModelTabeleKolac model = (ModelTabeleKolac) tblKolaci.getModel();
 
             model.setLista(kolaci);
 

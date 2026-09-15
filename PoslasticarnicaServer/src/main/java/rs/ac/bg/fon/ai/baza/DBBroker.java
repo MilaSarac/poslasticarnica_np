@@ -21,12 +21,15 @@ public class DBBroker {
         try {
             Properties properties = new Properties();
             properties.load(new FileInputStream("konfiguracija.properties"));
+            
             String url = properties.getProperty("url");
             String username = properties.getProperty("username");
             String password = properties.getProperty("password");
+            
             System.out.println("=== DBBroker ===");
 			System.out.println("URL: " + url);
 			System.out.println("Username: " + username);
+			
             connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
         } catch (Exception ex) {

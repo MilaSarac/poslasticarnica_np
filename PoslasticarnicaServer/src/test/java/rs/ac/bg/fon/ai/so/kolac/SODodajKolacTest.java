@@ -29,44 +29,31 @@ class SODodajKolacTest {
         Kolac kriterijum = new Kolac();
         kriterijum.setNaziv(nazivTestKolaca);
 
-        ArrayList<ApstraktniDomenskiObjekat> lista =
-                DBBroker.getInstance().vrati(kriterijum);
+        ArrayList<ApstraktniDomenskiObjekat> lista = DBBroker.getInstance().vrati(kriterijum);
 
         for (ApstraktniDomenskiObjekat ado : lista) {
-
             Kolac kolac = (Kolac) ado;
-
             if (kolac.getNaziv().equals(nazivTestKolaca)) {
                 DBBroker.getInstance().izbrisi(kolac);
             }
         }
 
         DBBroker.getInstance().getConnection().commit();
-
         operacija = null;
     }
 
     @Test
     void testDodajKolac() {
 
-        Kolac kolac = new Kolac(
-                null,
-                nazivTestKolaca,
-                500,
-                "Opis test kolaca"
-        );
+        Kolac kolac = new Kolac(null,nazivTestKolaca,500,"Opis test kolaca");
 
-        assertDoesNotThrow(() -> {
-            operacija.izvrsi(kolac);
-        });
+        assertDoesNotThrow(() -> {operacija.izvrsi(kolac);});
     }
 
     @Test
     void testPogresanTipObjekta() {
 
-        assertThrows(Exception.class, () -> {
-            operacija.izvrsi(new Kupac());
-        });
+        assertThrows(Exception.class, () -> {operacija.izvrsi(new Kupac());});
     }
 
     @Test
@@ -74,9 +61,7 @@ class SODodajKolacTest {
 
         Kolac kolac = new Kolac();
 
-        assertThrows(Exception.class, () -> {
-            operacija.izvrsi(kolac);
-        });
+        assertThrows(Exception.class, () -> {operacija.izvrsi(kolac);});
     }
 
     @Test
@@ -86,9 +71,7 @@ class SODodajKolacTest {
         kolac.setNaziv(nazivTestKolaca);
         kolac.setOpis("Opis");
 
-        assertThrows(Exception.class, () -> {
-            operacija.izvrsi(kolac);
-        });
+        assertThrows(Exception.class, () -> {operacija.izvrsi(kolac);});
     }
 
     @Test
@@ -98,8 +81,6 @@ class SODodajKolacTest {
         kolac.setNaziv(nazivTestKolaca);
         kolac.setCena(500);
 
-        assertThrows(Exception.class, () -> {
-            operacija.izvrsi(kolac);
-        });
+        assertThrows(Exception.class, () -> {operacija.izvrsi(kolac);});
     }
 }

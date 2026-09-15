@@ -38,42 +38,29 @@ public class SOUbaciRacun extends ApstraktnaSistemskaOperacija {
     protected void validacija(ApstraktniDomenskiObjekat ado) throws Exception {
 
         if (!(ado instanceof Racun)) {
-            throw new Exception(
-                    "Prosledjeni objekat nije instanca klase Racun!"
-            );
+            throw new Exception("Prosledjeni objekat nije instanca klase Racun!");
         }
 
         Racun racun = (Racun) ado;
 
         if (racun.getDatumIzdavanja() == null) {
-            throw new Exception(
-                    "Racun mora imati datum izdavanja!"
-            );
+            throw new Exception("Racun mora imati datum izdavanja!");
         }
 
         if (racun.getUkupanIznos() <= 0) {
-            throw new Exception(
-                    "Ukupan iznos racuna mora biti veci od 0!"
-            );
+            throw new Exception("Ukupan iznos racuna mora biti veci od 0!");
         }
 
         if (racun.getPoslasticar() == null) {
-            throw new Exception(
-                    "Racun mora imati poslasticara!"
-            );
+            throw new Exception("Racun mora imati poslasticara!");
         }
 
         if (racun.getKupac() == null) {
-            throw new Exception(
-                    "Racun mora imati kupca!"
-            );
+            throw new Exception("Racun mora imati kupca!");
         }
 
-        if (racun.getStavkeRacuna() == null
-                || racun.getStavkeRacuna().isEmpty()) {
-            throw new Exception(
-                    "Racun mora imati barem jednu stavku!"
-            );
+        if (racun.getStavkeRacuna() == null || racun.getStavkeRacuna().isEmpty()) {
+            throw new Exception("Racun mora imati barem jednu stavku!");
         }
 
         double zbirStavki = 0;
@@ -81,69 +68,40 @@ public class SOUbaciRacun extends ApstraktnaSistemskaOperacija {
         for (StavkaRacuna stavka : racun.getStavkeRacuna()) {
 
             if (stavka.getRb() <= 0) {
-                throw new Exception(
-                        "Redni broj stavke mora biti veci od 0!"
-                );
+                throw new Exception("Redni broj stavke mora biti veci od 0!");
             }
 
             if (stavka.getCena() <= 0) {
-                throw new Exception(
-                        "Cena stavke mora biti veca od 0!"
-                );
+                throw new Exception("Cena stavke mora biti veca od 0!");
             }
 
             if (stavka.getKolicina() <= 0) {
-                throw new Exception(
-                        "Kolicina mora biti veca od 0!"
-                );
+                throw new Exception("Kolicina mora biti veca od 0!");
             }
 
             if (stavka.getIznos() <= 0) {
-                throw new Exception(
-                        "Iznos stavke mora biti veci od 0!"
-                );
+                throw new Exception("Iznos stavke mora biti veci od 0!");
             }
 
             if (stavka.getKolac() == null) {
-                throw new Exception(
-                        "Stavka racuna mora imati kolac!"
-                );
+                throw new Exception("Stavka racuna mora imati kolac!");
             }
 
-            if (Math.abs(
-                    stavka.getCena()
-                    - stavka.getKolac().getCena()
-            ) > 0.001) {
-
-                throw new Exception(
-                        "Cena stavke mora biti jednaka ceni kolaca!"
-                );
+            if (Math.abs(stavka.getCena() - stavka.getKolac().getCena()) > 0.001) {
+                throw new Exception("Cena stavke mora biti jednaka ceni kolaca!");
             }
 
-            double ocekivaniIznos =
-                    stavka.getCena() * stavka.getKolicina();
+            double ocekivaniIznos = stavka.getCena() * stavka.getKolicina();
 
-            if (Math.abs(
-                    stavka.getIznos()
-                    - ocekivaniIznos
-            ) > 0.001) {
-
-                throw new Exception(
-                        "Iznos stavke mora biti jednak proizvodu cene i kolicine!"
-                );
+            if (Math.abs(stavka.getIznos() - ocekivaniIznos) > 0.001) {
+                throw new Exception("Iznos stavke mora biti jednak proizvodu cene i kolicine!");
             }
 
             zbirStavki += stavka.getIznos();
         }
 
-        if (Math.abs(
-                racun.getUkupanIznos()
-                - zbirStavki
-        ) > 0.001) {
-
-            throw new Exception(
-                    "Ukupan iznos racuna mora biti jednak zbiru iznosa svih stavki!"
-            );
+        if (Math.abs(racun.getUkupanIznos() - zbirStavki) > 0.001) {
+            throw new Exception("Ukupan iznos racuna mora biti jednak zbiru iznosa svih stavki!");
         }
     }
 
@@ -162,15 +120,12 @@ public class SOUbaciRacun extends ApstraktnaSistemskaOperacija {
     @Override
     protected void izvrsenje(ApstraktniDomenskiObjekat ado) throws Exception {
 
-        PreparedStatement ps =
-                DBBroker.getInstance().dodaj(ado);
+        PreparedStatement ps = DBBroker.getInstance().dodaj(ado);
 
         ResultSet tableKeys = ps.getGeneratedKeys();
 
         if (!tableKeys.next()) {
-            throw new Exception(
-                    "Nije moguce preuzeti identifikator novog racuna!"
-            );
+            throw new Exception( "Nije moguce preuzeti identifikator novog racuna!");
         }
 
         Long noviIdRacun = tableKeys.getLong(1);
@@ -178,11 +133,8 @@ public class SOUbaciRacun extends ApstraktnaSistemskaOperacija {
         Racun noviRacun = (Racun) ado;
         noviRacun.setIdRacun(noviIdRacun);
 
-        for (StavkaRacuna stavka :
-                noviRacun.getStavkeRacuna()) {
-
+        for (StavkaRacuna stavka : noviRacun.getStavkeRacuna()) {
             stavka.setRacun(noviRacun);
-
             DBBroker.getInstance().dodaj(stavka);
         }
 

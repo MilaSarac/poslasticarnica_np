@@ -82,9 +82,7 @@ public class FormaPretragaKupaca extends JDialog {
         btnPretrazi.addActionListener(
                 new java.awt.event.ActionListener() {
                     @Override
-                    public void actionPerformed(
-                            java.awt.event.ActionEvent evt) {
-
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
                         btnPretraziActionPerformed(evt);
                     }
                 });
@@ -94,9 +92,7 @@ public class FormaPretragaKupaca extends JDialog {
         btnDetalji.addActionListener(
                 new java.awt.event.ActionListener() {
                     @Override
-                    public void actionPerformed(
-                            java.awt.event.ActionEvent evt) {
-
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
                         btnDetaljiActionPerformed(evt);
                     }
                 });
@@ -106,9 +102,7 @@ public class FormaPretragaKupaca extends JDialog {
         btnZatvori.addActionListener(
                 new java.awt.event.ActionListener() {
                     @Override
-                    public void actionPerformed(
-                            java.awt.event.ActionEvent evt) {
-
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
                         dispose();
                     }
                 });
@@ -264,62 +258,37 @@ public class FormaPretragaKupaca extends JDialog {
         pack();
     }
 
-    private void btnPretraziActionPerformed(
-            java.awt.event.ActionEvent evt) {
+    private void btnPretraziActionPerformed(java.awt.event.ActionEvent evt) {
 
         String parametar = txtPretraga.getText();
 
-        ModelTabeleKupac model =
-                (ModelTabeleKupac) tblKupci.getModel();
+        ModelTabeleKupac model = (ModelTabeleKupac) tblKupci.getModel();
 
         model.setParametar(parametar);
 
         if (model.getLista().isEmpty()) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Sistem ne moze da nadje kupce po zadatim kriterijumima."
-            );
-
+            JOptionPane.showMessageDialog(this,"Sistem ne moze da nadje kupce po zadatim kriterijumima.");
         } else {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Sistem je nasao kupce po zadatim kriterijumima."
-            );
+        	JOptionPane.showMessageDialog(this,"Sistem je nasao kupce po zadatim kriterijumima.");
         }
     }
 
-    private void btnDetaljiActionPerformed(
-            java.awt.event.ActionEvent evt) {
+    private void btnDetaljiActionPerformed(java.awt.event.ActionEvent evt) {
 
         int row = tblKupci.getSelectedRow();
 
         if (row >= 0) {
 
-            ModelTabeleKupac model =
-                    (ModelTabeleKupac) tblKupci.getModel();
+            ModelTabeleKupac model = (ModelTabeleKupac) tblKupci.getModel();
 
-            Kupac kupac =
-                    model.getSelectedKupac(row);
+            Kupac kupac = model.getSelectedKupac(row);
+            
+            JOptionPane.showMessageDialog(this,"Sistem je nasao kupca.");
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Sistem je nasao kupca."
-            );
-
-            new FormaDetaljiKupca(
-                    this,
-                    true,
-                    kupac
-            ).setVisible(true);
+            new FormaDetaljiKupca(this,true,kupac).setVisible(true);
 
         } else {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Morate izabrati kupca iz tabele."
-            );
+            JOptionPane.showMessageDialog(this,"Morate izabrati kupca iz tabele.");
         }
     }
 
@@ -327,10 +296,7 @@ public class FormaPretragaKupaca extends JDialog {
 
         try {
 
-            ArrayList<Mesto> mesta =
-                    KlijentKontroler
-                            .getInstance()
-                            .vratiSvaMesta();
+            ArrayList<Mesto> mesta = KlijentKontroler.getInstance().vratiSvaMesta();
 
             cmbMesto.removeAllItems();
 
@@ -340,72 +306,42 @@ public class FormaPretragaKupaca extends JDialog {
                 cmbMesto.addItem(mesto);
             }
 
-            cmbMesto.addItemListener(
-                    new java.awt.event.ItemListener() {
+            cmbMesto.addItemListener(new java.awt.event.ItemListener() {
 
                         @Override
-                        public void itemStateChanged(
-                                java.awt.event.ItemEvent evt) {
+                        public void itemStateChanged(java.awt.event.ItemEvent evt) {
 
-                            if (evt.getStateChange()
-                                    == java.awt.event.ItemEvent.SELECTED) {
+                            if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
 
-                                Object selected =
-                                        cmbMesto.getSelectedItem();
+                                Object selected = cmbMesto.getSelectedItem();
 
-                                ModelTabeleKupac model =
-                                        (ModelTabeleKupac)
-                                                tblKupci.getModel();
+                                ModelTabeleKupac model = (ModelTabeleKupac) tblKupci.getModel();
 
                                 if (selected instanceof Mesto) {
-
-                                    model.setMesto(
-                                            (Mesto) selected
-                                    );
-
+                                    model.setMesto((Mesto) selected);
                                 } else {
-
                                     model.setMesto(null);
                                 }
                             }
                         }
                     });
-
         } catch (Exception ex) {
-
-            Logger.getLogger(
-                    FormaPretragaKupaca.class.getName())
-                    .log(
-                            Level.SEVERE,
-                            null,
-                            ex
-                    );
+            Logger.getLogger(FormaPretragaKupaca.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
 
     public void refreshTable() {
 
-        ModelTabeleKupac model =
-                (ModelTabeleKupac)
-                        tblKupci.getModel();
-
+        ModelTabeleKupac model = (ModelTabeleKupac) tblKupci.getModel();
         model.refreshTable();
+        
     }
 
     public static void main(String[] args) {
-
-        EventQueue.invokeLater(
-                new Runnable() {
-
+        EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-
-                        FormaPretragaKupaca dialog =
-                                new FormaPretragaKupaca(
-                                        new javax.swing.JFrame(),
-                                        true
-                                );
-
+                        FormaPretragaKupaca dialog = new FormaPretragaKupaca(new javax.swing.JFrame(),true);
                         dialog.setVisible(true);
                     }
                 }

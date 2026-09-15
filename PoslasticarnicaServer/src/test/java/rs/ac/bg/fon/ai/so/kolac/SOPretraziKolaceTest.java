@@ -29,10 +29,7 @@ class SOPretraziKolaceTest {
         assertFalse(operacija.getLista().isEmpty());
 
         for (Kolac kolac : operacija.getLista()) {
-            assertTrue(kolac.getNaziv()
-                            .toLowerCase()
-                            .contains("torta")
-            );
+            assertTrue(kolac.getNaziv().toLowerCase().contains("torta"));
         }
     }
 
@@ -40,7 +37,7 @@ class SOPretraziKolaceTest {
     void testPretragaBezRezultata() throws Exception {
 
         Kolac kriterijum = new Kolac();
-        kriterijum.setNaziv("NepostojeciKolac12345");
+        kriterijum.setNaziv("Kolac12345");
 
         operacija.izvrsi(kriterijum);
 

@@ -55,9 +55,7 @@ class SOObrisiKupcaTest {
 
         kupac.setIdKupac(idKupac);
 
-        assertDoesNotThrow(
-                () -> operacija.izvrsi(kupac)
-        );
+        assertDoesNotThrow(() -> operacija.izvrsi(kupac));
 
         assertFalse(postojiKupac(idKupac));
     }
@@ -65,22 +63,16 @@ class SOObrisiKupcaTest {
     @Test
     void testPogresanTipObjekta() {
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(new Kolac())
-        );
+        assertThrows(Exception.class,() -> operacija.izvrsi(new Kolac()));
     }
 
     private Long pronadjiIdKupca(String email) throws Exception {
 
-        Connection connection =
-                DBBroker.getInstance().getConnection();
+        Connection connection = DBBroker.getInstance().getConnection();
 
-        String upit =
-                "SELECT idKupac FROM kupac WHERE email = ?";
+        String upit = "SELECT idKupac FROM kupac WHERE email = ?";
 
-        PreparedStatement ps =
-                connection.prepareStatement(upit);
+        PreparedStatement ps = connection.prepareStatement(upit);
 
         ps.setString(1, email);
 
@@ -100,14 +92,11 @@ class SOObrisiKupcaTest {
 
     private boolean postojiKupac(Long idKupac) throws Exception {
 
-        Connection connection =
-                DBBroker.getInstance().getConnection();
+        Connection connection = DBBroker.getInstance().getConnection();
 
-        String upit =
-                "SELECT idKupac FROM kupac WHERE idKupac = ?";
+        String upit = "SELECT idKupac FROM kupac WHERE idKupac = ?";
 
-        PreparedStatement ps =
-                connection.prepareStatement(upit);
+        PreparedStatement ps = connection.prepareStatement(upit);
 
         ps.setLong(1, idKupac);
 

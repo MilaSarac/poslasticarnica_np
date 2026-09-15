@@ -44,22 +44,15 @@ class SOUbaciRacunTest {
 
         if (idDodatogRacuna != null) {
 
-            Connection connection =
-                    DBBroker.getInstance().getConnection();
+            Connection connection = DBBroker.getInstance().getConnection();
 
-            PreparedStatement psStavke =
-                    connection.prepareStatement(
-                            "DELETE FROM stavkaRacuna WHERE idRacun = ?"
-                    );
+            PreparedStatement psStavke = connection.prepareStatement("DELETE FROM stavkaRacuna WHERE idRacun = ?");
 
             psStavke.setLong(1, idDodatogRacuna);
             psStavke.executeUpdate();
             psStavke.close();
 
-            PreparedStatement psRacun =
-                    connection.prepareStatement(
-                            "DELETE FROM racun WHERE idRacun = ?"
-                    );
+            PreparedStatement psRacun = connection.prepareStatement("DELETE FROM racun WHERE idRacun = ?");
 
             psRacun.setLong(1, idDodatogRacuna);
             psRacun.executeUpdate();
@@ -74,58 +67,30 @@ class SOUbaciRacunTest {
     @Test
     void testUbaciRacun() throws Exception {
 
-        ArrayList<StavkaRacuna> stavke =
-                new ArrayList<>();
+        ArrayList<StavkaRacuna> stavke = new ArrayList<>();
 
-        StavkaRacuna stavka =
-                new StavkaRacuna(
-                        null,
-                        1,
-                        kolac.getCena(),
-                        2,
-                        kolac.getCena() * 2,
-                        kolac
-                );
+        StavkaRacuna stavka = new StavkaRacuna(null, 1, kolac.getCena(), 2, kolac.getCena() * 2, kolac);
 
         stavke.add(stavka);
 
-        double ukupanIznos =
-                kolac.getCena() * 2;
+        double ukupanIznos = kolac.getCena() * 2;
 
-        Racun racun =
-                new Racun(
-                        null,
-                        new Date(),
-                        ukupanIznos,
-                        poslasticar,
-                        kupac,
-                        stavke
-                );
+        Racun racun = new Racun(null, new Date(), ukupanIznos, poslasticar, kupac, stavke);
 
-        assertDoesNotThrow(
-                () -> operacija.izvrsi(racun)
-        );
+        assertDoesNotThrow(() -> operacija.izvrsi(racun));
 
         assertNotNull(racun.getIdRacun());
 
         idDodatogRacuna = racun.getIdRacun();
 
-        assertTrue(
-                postojiRacunUBazi(idDodatogRacuna)
-        );
-
-        assertTrue(
-                postojiStavkaUBazi(idDodatogRacuna)
-        );
+        assertTrue(postojiRacunUBazi(idDodatogRacuna));
+        assertTrue(postojiStavkaUBazi(idDodatogRacuna));
     }
 
     @Test
     void testPogresanTipObjekta() {
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(new Kolac())
-        );
+        assertThrows(Exception.class, () -> operacija.izvrsi(new Kolac()));
     }
 
     @Test
@@ -144,27 +109,15 @@ class SOUbaciRacunTest {
         racun.setKupac(kupac);
         racun.setStavkeRacuna(new ArrayList<>());
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(racun)
-        );
+        assertThrows(Exception.class, () -> operacija.izvrsi(racun));
     }
 
     @Test
     void testNeispravanUkupanIznos() {
 
-        ArrayList<StavkaRacuna> stavke =
-                new ArrayList<>();
+        ArrayList<StavkaRacuna> stavke =new ArrayList<>();
 
-        StavkaRacuna stavka =
-                new StavkaRacuna(
-                        null,
-                        1,
-                        kolac.getCena(),
-                        2,
-                        kolac.getCena() * 2,
-                        kolac
-                );
+        StavkaRacuna stavka = new StavkaRacuna(null, 1, kolac.getCena(), 2, kolac.getCena() * 2, kolac);
 
         stavke.add(stavka);
 
@@ -172,51 +125,29 @@ class SOUbaciRacunTest {
          * Stavke zajedno vrede cena * 2, ali namerno postavljamo
          * drugaciji ukupan iznos racuna.
          */
-        double pogresanUkupanIznos =
-                kolac.getCena() * 2 + 100;
+        double pogresanUkupanIznos = kolac.getCena() * 2 + 100;
 
-        Racun racun =
-                new Racun(
-                        null,
-                        new Date(),
-                        pogresanUkupanIznos,
-                        poslasticar,
-                        kupac,
-                        stavke
-                );
+        Racun racun = new Racun(null, new Date(), pogresanUkupanIznos, poslasticar, kupac, stavke);
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(racun)
-        );
+        assertThrows(Exception.class, () -> operacija.izvrsi(racun));
     }
 
-    private Poslasticar vratiPrvogPoslasticara()
-            throws Exception {
+    private Poslasticar vratiPrvogPoslasticara() throws Exception {
 
-        PreparedStatement ps =
-                DBBroker.getInstance()
-                        .getConnection()
-                        .prepareStatement(
-                                "SELECT * FROM poslasticar LIMIT 1"
-                        );
+        PreparedStatement ps = DBBroker.getInstance().getConnection()
+                        .prepareStatement("SELECT * FROM poslasticar LIMIT 1");
 
         ResultSet rs = ps.executeQuery();
 
-        assertTrue(
-                rs.next(),
-                "U bazi mora postojati makar jedan poslasticar."
-        );
+        assertTrue(rs.next(), "U bazi mora postojati makar jedan poslasticar.");
 
-        Poslasticar p =
-                new Poslasticar(
+        Poslasticar p = new Poslasticar(
                         rs.getLong("idPoslasticar"),
                         rs.getString("ime"),
                         rs.getString("prezime"),
                         rs.getString("korisnickoIme"),
                         rs.getString("sifra"),
-                        rs.getDate("datumZaposlenja")
-                );
+                        rs.getDate("datumZaposlenja"));
 
         rs.close();
         ps.close();
@@ -224,42 +155,27 @@ class SOUbaciRacunTest {
         return p;
     }
 
-    private Kupac vratiPrvogKupca()
-            throws Exception {
+    private Kupac vratiPrvogKupca() throws Exception {
 
-        PreparedStatement ps =
-                DBBroker.getInstance()
-                        .getConnection()
-                        .prepareStatement(
-                                "SELECT k.*, m.naziv AS nazivMesta "
-                                + "FROM kupac k "
-                                + "JOIN mesto m "
-                                + "ON k.idMesto = m.idMesto "
-                                + "LIMIT 1"
-                        );
+        PreparedStatement ps = DBBroker.getInstance().getConnection()
+                        .prepareStatement("SELECT k.*, m.naziv AS nazivMesta "
+                                			+ "FROM kupac k JOIN mesto m ON k.idMesto = m.idMesto LIMIT 1");
 
         ResultSet rs = ps.executeQuery();
 
-        assertTrue(
-                rs.next(),
-                "U bazi mora postojati makar jedan kupac."
-        );
+        assertTrue(rs.next(), "U bazi mora postojati makar jedan kupac.");
 
-        Mesto mesto =
-                new Mesto(
+        Mesto mesto = new Mesto(
                         rs.getLong("idMesto"),
-                        rs.getString("nazivMesta")
-                );
+                        rs.getString("nazivMesta"));
 
-        Kupac k =
-                new Kupac(
+        Kupac k = new Kupac(
                         rs.getLong("idKupac"),
                         rs.getString("ime"),
                         rs.getString("prezime"),
                         rs.getString("brojTelefona"),
                         rs.getString("email"),
-                        mesto
-                );
+                        mesto);
 
         rs.close();
         ps.close();
@@ -267,30 +183,20 @@ class SOUbaciRacunTest {
         return k;
     }
 
-    private Kolac vratiPrviKolac()
-            throws Exception {
+    private Kolac vratiPrviKolac() throws Exception {
 
-        PreparedStatement ps =
-                DBBroker.getInstance()
-                        .getConnection()
-                        .prepareStatement(
-                                "SELECT * FROM kolac LIMIT 1"
-                        );
+        PreparedStatement ps = DBBroker.getInstance().getConnection()
+                        .prepareStatement("SELECT * FROM kolac LIMIT 1");
 
         ResultSet rs = ps.executeQuery();
 
-        assertTrue(
-                rs.next(),
-                "U bazi mora postojati makar jedan kolac."
-        );
+        assertTrue(rs.next(), "U bazi mora postojati makar jedan kolac.");
 
-        Kolac k =
-                new Kolac(
+        Kolac k = new Kolac(
                         rs.getLong("idKolac"),
                         rs.getString("naziv"),
                         rs.getDouble("cena"),
-                        rs.getString("opis")
-                );
+                        rs.getString("opis"));
 
         rs.close();
         ps.close();
@@ -298,16 +204,10 @@ class SOUbaciRacunTest {
         return k;
     }
 
-    private boolean postojiRacunUBazi(Long idRacun)
-            throws Exception {
+    private boolean postojiRacunUBazi(Long idRacun) throws Exception {
 
-        PreparedStatement ps =
-                DBBroker.getInstance()
-                        .getConnection()
-                        .prepareStatement(
-                                "SELECT * FROM racun "
-                                + "WHERE idRacun = ?"
-                        );
+        PreparedStatement ps = DBBroker.getInstance().getConnection()
+                        .prepareStatement("SELECT * FROM racun WHERE idRacun = ?");
 
         ps.setLong(1, idRacun);
 
@@ -321,16 +221,10 @@ class SOUbaciRacunTest {
         return postoji;
     }
 
-    private boolean postojiStavkaUBazi(Long idRacun)
-            throws Exception {
+    private boolean postojiStavkaUBazi(Long idRacun) throws Exception {
 
-        PreparedStatement ps =
-                DBBroker.getInstance()
-                        .getConnection()
-                        .prepareStatement(
-                                "SELECT * FROM stavkaRacuna "
-                                + "WHERE idRacun = ?"
-                        );
+        PreparedStatement ps = DBBroker.getInstance().getConnection()
+                        .prepareStatement("SELECT * FROM stavkaRacuna WHERE idRacun = ?");
 
         ps.setLong(1, idRacun);
 

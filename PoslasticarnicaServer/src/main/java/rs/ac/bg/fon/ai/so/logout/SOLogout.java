@@ -26,9 +26,7 @@ public class SOLogout extends ApstraktnaSistemskaOperacija {
     protected void validacija(ApstraktniDomenskiObjekat ado) throws Exception {
 
         if (!(ado instanceof Poslasticar)) {
-            throw new Exception(
-                    "Prosledjeni objekat nije instanca klase Poslasticar!"
-            );
+            throw new Exception("Prosledjeni objekat nije instanca klase Poslasticar!");
         }
     }
 
@@ -44,14 +42,10 @@ public class SOLogout extends ApstraktnaSistemskaOperacija {
 
         Poslasticar poslasticar = (Poslasticar) ado;
 
-        boolean uklonjen = ServerKontroler.getInstance()
-                .getUlogovaniPoslasticari()
-                .remove(poslasticar);
+        boolean uklonjen = ServerKontroler.getInstance().getUlogovaniPoslasticari().remove(poslasticar);
 
         if (!uklonjen) {
-            throw new Exception(
-                    "Poslasticar nije prijavljen na sistem!"
-            );
+            throw new Exception("Poslasticar nije prijavljen na sistem!");
         }
     }
 }

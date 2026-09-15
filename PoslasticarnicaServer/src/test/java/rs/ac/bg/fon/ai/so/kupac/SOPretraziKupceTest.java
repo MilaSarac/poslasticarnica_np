@@ -27,21 +27,12 @@ class SOPretraziKupceTest {
         long vreme = System.currentTimeMillis();
         testEmail = "pretraga" + vreme + "@gmail.com";
 
-        String telefon =
-                "06" + String.valueOf(vreme).substring(
-                        String.valueOf(vreme).length() - 8);
+        String telefon = "06" + String.valueOf(vreme).substring(String.valueOf(vreme).length() - 8);
 
         Mesto mesto = new Mesto();
         mesto.setIdMesto(1L);
 
-        Kupac kupac = new Kupac(
-                null,
-                "TestPretraga",
-                "Kupac",
-                telefon,
-                testEmail,
-                mesto
-        );
+        Kupac kupac = new Kupac(null,"TestPretraga","Kupac",telefon,testEmail,mesto);
 
         DBBroker.getInstance().dodaj(kupac);
         DBBroker.getInstance().getConnection().commit();
@@ -64,10 +55,7 @@ class SOPretraziKupceTest {
         assertNotNull(operacija.getLista());
         assertFalse(operacija.getLista().isEmpty());
 
-        assertEquals(
-                testEmail,
-                operacija.getLista().get(0).getEmail()
-        );
+        assertEquals(testEmail, operacija.getLista().get(0).getEmail());
     }
 
     @Test
@@ -85,22 +73,16 @@ class SOPretraziKupceTest {
     @Test
     void testPogresanTipObjekta() {
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(new Kolac())
-        );
+        assertThrows(Exception.class, () -> operacija.izvrsi(new Kolac()));
     }
 
     private void obrisiTestKupca() throws Exception {
 
-        Connection connection =
-                DBBroker.getInstance().getConnection();
+        Connection connection = DBBroker.getInstance().getConnection();
 
-        String upit =
-                "DELETE FROM kupac WHERE email = ?";
+        String upit = "DELETE FROM kupac WHERE email = ?";
 
-        PreparedStatement ps =
-                connection.prepareStatement(upit);
+        PreparedStatement ps = connection.prepareStatement(upit);
 
         ps.setString(1, testEmail);
 

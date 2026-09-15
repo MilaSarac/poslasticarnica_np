@@ -31,15 +31,10 @@ class SOPromeniKupcaTest {
     @AfterEach
     void tearDown() throws Exception {
 
-        Connection connection =
-                DBBroker.getInstance().getConnection();
+        Connection connection = DBBroker.getInstance().getConnection();
 
         for (Long id : testKupci) {
-
-            PreparedStatement ps =
-                    connection.prepareStatement(
-                            "DELETE FROM kupac WHERE idKupac = ?"
-                    );
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM kupac WHERE idKupac = ?");
 
             ps.setLong(1, id);
             ps.executeUpdate();
@@ -57,35 +52,17 @@ class SOPromeniKupcaTest {
 
         Mesto mesto = vratiPrvoMesto();
 
-        String email =
-                "promena" + System.nanoTime() + "@gmail.com";
+        String email = "promena" + System.nanoTime() + "@gmail.com";
 
-        String telefon =
-                generisiTelefon(1);
+        String telefon = generisiTelefon(1);
 
-        Kupac kupac = new Kupac(
-                null,
-                "Test",
-                "Kupac",
-                telefon,
-                email,
-                mesto
-        );
+        Kupac kupac = new Kupac(null,"Test","Kupac",telefon,email,mesto);
 
         Long idKupac = dodajTestKupca(kupac);
 
-        Kupac promenjeniKupac = new Kupac(
-                idKupac,
-                "Test",
-                "Kupac",
-                telefon,
-                email,
-                mesto
-        );
+        Kupac promenjeniKupac = new Kupac(idKupac,"Test","Kupac",telefon,email,mesto);
 
-        assertDoesNotThrow(
-                () -> operacija.izvrsi(promenjeniKupac)
-        );
+        assertDoesNotThrow(() -> operacija.izvrsi(promenjeniKupac));
     }
 
     @Test
@@ -93,50 +70,27 @@ class SOPromeniKupcaTest {
 
         Mesto mesto = vratiPrvoMesto();
 
-        String email =
-                "stari" + System.nanoTime() + "@gmail.com";
+        String email = "stari" + System.nanoTime() + "@gmail.com";
 
-        String telefon =
-                generisiTelefon(2);
+        String telefon = generisiTelefon(2);
 
-        Kupac kupac = new Kupac(
-                null,
-                "Test",
-                "Kupac",
-                telefon,
-                email,
-                mesto
-        );
+        Kupac kupac = new Kupac(null,"Test","Kupac",telefon,email,mesto);
 
         Long idKupac = dodajTestKupca(kupac);
 
-        String noviEmail =
-                "novi" + System.nanoTime() + "@gmail.com";
+        String noviEmail = "novi" + System.nanoTime() + "@gmail.com";
 
-        String noviTelefon =
-                generisiTelefon(3);
+        String noviTelefon = generisiTelefon(3);
 
-        Kupac promenjeniKupac = new Kupac(
-                idKupac,
-                "Test",
-                "Kupac",
-                noviTelefon,
-                noviEmail,
-                mesto
-        );
+        Kupac promenjeniKupac = new Kupac(idKupac,"Test","Kupac",noviTelefon,noviEmail,mesto);
 
-        assertDoesNotThrow(
-                () -> operacija.izvrsi(promenjeniKupac)
-        );
+        assertDoesNotThrow(() -> operacija.izvrsi(promenjeniKupac));
     }
 
     @Test
     void testPogresanTipObjekta() {
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(new Kolac())
-        );
+        assertThrows(Exception.class, () -> operacija.izvrsi(new Kolac()));
     }
 
     @Test
@@ -144,19 +98,10 @@ class SOPromeniKupcaTest {
 
         Mesto mesto = vratiPrvoMesto();
 
-        Kupac kupac = new Kupac(
-                null,
-                "Test",
-                "Kupac",
-                generisiTelefon(4),
-                "bezid" + System.nanoTime() + "@gmail.com",
-                mesto
-        );
+        Kupac kupac = new Kupac( null,"Test","Kupac",generisiTelefon(4),
+        		"bezid" + System.nanoTime() + "@gmail.com",mesto);
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(kupac)
-        );
+        assertThrows(Exception.class,() -> operacija.izvrsi(kupac));
     }
 
     @Test
@@ -164,46 +109,20 @@ class SOPromeniKupcaTest {
 
         Mesto mesto = vratiPrvoMesto();
 
-        String emailPrvog =
-                "prvi" + System.nanoTime() + "@gmail.com";
+        String emailPrvog = "prvi" + System.nanoTime() + "@gmail.com";
 
-        String emailDrugog =
-                "drugi" + System.nanoTime() + "@gmail.com";
+        String emailDrugog = "drugi" + System.nanoTime() + "@gmail.com";
 
-        Kupac prvi = new Kupac(
-                null,
-                "Prvi",
-                "Kupac",
-                generisiTelefon(5),
-                emailPrvog,
-                mesto
-        );
+        Kupac prvi = new Kupac(null, "Prvi", "Kupac", generisiTelefon(5), emailPrvog, mesto);
 
-        Kupac drugi = new Kupac(
-                null,
-                "Drugi",
-                "Kupac",
-                generisiTelefon(6),
-                emailDrugog,
-                mesto
-        );
+        Kupac drugi = new Kupac(null, "Drugi", "Kupac", generisiTelefon(6), emailDrugog, mesto);
 
         dodajTestKupca(prvi);
         Long idDrugog = dodajTestKupca(drugi);
 
-        Kupac promenjeniDrugi = new Kupac(
-                idDrugog,
-                "Drugi",
-                "Kupac",
-                drugi.getBrojTelefona(),
-                emailPrvog,
-                mesto
-        );
+        Kupac promenjeniDrugi = new Kupac(idDrugog,"Drugi","Kupac", drugi.getBrojTelefona(), emailPrvog,mesto);
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(promenjeniDrugi)
-        );
+        assertThrows(Exception.class, () -> operacija.izvrsi(promenjeniDrugi));
     }
 
     @Test
@@ -211,46 +130,22 @@ class SOPromeniKupcaTest {
 
         Mesto mesto = vratiPrvoMesto();
 
-        String telefonPrvog =
-                generisiTelefon(7);
+        String telefonPrvog = generisiTelefon(7);
 
-        String telefonDrugog =
-                generisiTelefon(8);
+        String telefonDrugog = generisiTelefon(8);
 
-        Kupac prvi = new Kupac(
-                null,
-                "Prvi",
-                "Kupac",
-                telefonPrvog,
-                "prvi" + System.nanoTime() + "@gmail.com",
-                mesto
-        );
+        Kupac prvi = new Kupac(null,"Prvi","Kupac",telefonPrvog,
+                "prvi" + System.nanoTime() + "@gmail.com",mesto);
 
-        Kupac drugi = new Kupac(
-                null,
-                "Drugi",
-                "Kupac",
-                telefonDrugog,
-                "drugi" + System.nanoTime() + "@gmail.com",
-                mesto
-        );
+        Kupac drugi = new Kupac(null, "Drugi", "Kupac",telefonDrugog,
+                "drugi" + System.nanoTime() + "@gmail.com", mesto);
 
         dodajTestKupca(prvi);
         Long idDrugog = dodajTestKupca(drugi);
 
-        Kupac promenjeniDrugi = new Kupac(
-                idDrugog,
-                "Drugi",
-                "Kupac",
-                telefonPrvog,
-                drugi.getEmail(),
-                mesto
-        );
+        Kupac promenjeniDrugi = new Kupac(idDrugog,"Drugi","Kupac",telefonPrvog,drugi.getEmail(),mesto);
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(promenjeniDrugi)
-        );
+        assertThrows(Exception.class, () -> operacija.izvrsi(promenjeniDrugi));
     }
 
     private Long dodajTestKupca(Kupac kupac) throws Exception {
@@ -258,12 +153,8 @@ class SOPromeniKupcaTest {
         DBBroker.getInstance().dodaj(kupac);
         DBBroker.getInstance().getConnection().commit();
 
-        PreparedStatement ps =
-                DBBroker.getInstance()
-                        .getConnection()
-                        .prepareStatement(
-                                "SELECT idKupac FROM kupac WHERE email = ?"
-                        );
+        PreparedStatement ps = DBBroker.getInstance().getConnection()
+                        .prepareStatement("SELECT idKupac FROM kupac WHERE email = ?");
 
         ps.setString(1, kupac.getEmail());
 
@@ -287,24 +178,14 @@ class SOPromeniKupcaTest {
 
     private Mesto vratiPrvoMesto() throws Exception {
 
-        PreparedStatement ps =
-                DBBroker.getInstance()
-                        .getConnection()
-                        .prepareStatement(
-                                "SELECT idMesto, naziv FROM mesto LIMIT 1"
-                        );
+        PreparedStatement ps = DBBroker.getInstance().getConnection()
+        		.prepareStatement("SELECT idMesto, naziv FROM mesto LIMIT 1");
 
         ResultSet rs = ps.executeQuery();
 
-        assertTrue(
-                rs.next(),
-                "U bazi mora postojati makar jedno mesto."
-        );
+        assertTrue(rs.next(),"U bazi mora postojati makar jedno mesto.");
 
-        Mesto mesto = new Mesto(
-                rs.getLong("idMesto"),
-                rs.getString("naziv")
-        );
+        Mesto mesto = new Mesto(rs.getLong("idMesto"),rs.getString("naziv"));
 
         rs.close();
         ps.close();
@@ -314,15 +195,7 @@ class SOPromeniKupcaTest {
 
     private String generisiTelefon(int dodatak) {
 
-        long broj =
-                Math.abs(
-                        (System.nanoTime() + dodatak)
-                                % 100000000L
-                );
-
-        return String.format(
-                "06%08d",
-                broj
-        );
+        long broj = Math.abs((System.nanoTime() + dodatak) % 100000000L);
+        return String.format("06%08d",broj);
     }
 }

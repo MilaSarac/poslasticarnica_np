@@ -1,11 +1,6 @@
 package rs.ac.bg.fon.ai.forme;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import rs.ac.bg.fon.ai.domen.Poslasticar;
 import rs.ac.bg.fon.ai.kontroler.KlijentKontroler;
@@ -17,7 +12,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
-import java.awt.Dimension;
 
 public class LoginForma extends javax.swing.JFrame {
 

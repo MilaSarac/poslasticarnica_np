@@ -26,8 +26,7 @@ public class SOVratiSvaMesta extends ApstraktnaSistemskaOperacija {
     @Override
     protected void izvrsenje(ApstraktniDomenskiObjekat ado) throws Exception {
 
-        ArrayList<ApstraktniDomenskiObjekat> mesta =
-                DBBroker.getInstance().vrati(ado);
+        ArrayList<ApstraktniDomenskiObjekat> mesta = DBBroker.getInstance().vrati(ado);
 
         lista = (ArrayList<Mesto>) (ArrayList<?>) mesta;
     }

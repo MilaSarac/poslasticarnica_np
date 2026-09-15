@@ -40,10 +40,7 @@ public class FormaDetaljiKupca extends JDialog {
     private JButton btnObrisi;
     private JButton btnPromeni;
 
-    public FormaDetaljiKupca(
-            FormaPretragaKupaca parent,
-            boolean modal,
-            Kupac kupac) {
+    public FormaDetaljiKupca(FormaPretragaKupaca parent, boolean modal, Kupac kupac) {
 
         super(parent, modal);
 
@@ -309,21 +306,13 @@ public class FormaDetaljiKupca extends JDialog {
 
     private void popuniPodatke() {
 
-        txtIme.setText(
-                kupac.getIme()
-        );
+        txtIme.setText(kupac.getIme());
 
-        txtPrezime.setText(
-                kupac.getPrezime()
-        );
+        txtPrezime.setText(kupac.getPrezime());
 
-        txtEmail.setText(
-                kupac.getEmail()
-        );
+        txtEmail.setText(kupac.getEmail());
 
-        txtBrojTelefona.setText(
-                kupac.getBrojTelefona()
-        );
+        txtBrojTelefona.setText(kupac.getBrojTelefona());
 
         selektujMesto();
     }
@@ -332,10 +321,7 @@ public class FormaDetaljiKupca extends JDialog {
 
         try {
 
-            ArrayList<Mesto> mesta =
-                    KlijentKontroler
-                            .getInstance()
-                            .vratiSvaMesta();
+            ArrayList<Mesto> mesta = KlijentKontroler.getInstance().vratiSvaMesta();
 
             cmbMesto.removeAllItems();
 
@@ -346,13 +332,7 @@ public class FormaDetaljiKupca extends JDialog {
 
         } catch (Exception ex) {
 
-            Logger.getLogger(
-                    FormaDetaljiKupca.class.getName())
-                    .log(
-                            Level.SEVERE,
-                            null,
-                            ex
-                    );
+            Logger.getLogger(FormaDetaljiKupca.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
 
@@ -362,21 +342,13 @@ public class FormaDetaljiKupca extends JDialog {
             return;
         }
 
-        for (int i = 0;
-             i < cmbMesto.getItemCount();
-             i++) {
+        for (int i = 0; i < cmbMesto.getItemCount(); i++) {
 
-            Mesto mesto =
-                    cmbMesto.getItemAt(i);
+            Mesto mesto = cmbMesto.getItemAt(i);
 
-            if (mesto != null
-                    && mesto.getIdMesto() != null
-                    && mesto.getIdMesto()
-                            .equals(
-                                    kupac.getMesto()
-                                            .getIdMesto()
-                            )) {
-
+            if (mesto != null && mesto.getIdMesto() != null && 
+            		mesto.getIdMesto().equals(kupac.getMesto().getIdMesto())) {
+            	
                 cmbMesto.setSelectedIndex(i);
                 break;
             }
@@ -392,64 +364,38 @@ public class FormaDetaljiKupca extends JDialog {
                     || txtBrojTelefona.getText().isEmpty()
                     || cmbMesto.getSelectedItem() == null) {
 
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Sva polja moraju biti popunjena!"
-                );
+                JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena!");
 
                 return;
             }
 
-            String email =
-                    txtEmail.getText();
+            String email = txtEmail.getText();
 
-            String brojTelefona =
-                    txtBrojTelefona.getText();
+            String brojTelefona = txtBrojTelefona.getText();
 
-            Mesto mesto =
-                    (Mesto)
-                            cmbMesto.getSelectedItem();
+            Mesto mesto = (Mesto) cmbMesto.getSelectedItem();
 
             kupac.setEmail(email);
 
-            kupac.setBrojTelefona(
-                    brojTelefona
-            );
+            kupac.setBrojTelefona(brojTelefona);
 
             kupac.setMesto(mesto);
 
-            KlijentKontroler
-                    .getInstance()
-                    .promeniKupca(kupac);
+            KlijentKontroler.getInstance().promeniKupca(kupac);
 
-            FormaPretragaKupaca parent =
-                    (FormaPretragaKupaca)
-                            getParent();
+            FormaPretragaKupaca parent = (FormaPretragaKupaca) getParent();
 
             parent.refreshTable();
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Sistem je zapamtio kupca."
-            );
+            JOptionPane.showMessageDialog(this,"Sistem je zapamtio kupca.");
 
             dispose();
 
         } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Sistem ne moze da zapamti kupca.\n"
-                            + ex.getMessage()
-            );
+            JOptionPane.showMessageDialog(this,"Sistem ne moze da zapamti kupca.\n"+ ex.getMessage());
 
-            Logger.getLogger(
-                    FormaDetaljiKupca.class.getName())
-                    .log(
-                            Level.SEVERE,
-                            null,
-                            ex
-                    );
+            Logger.getLogger(FormaDetaljiKupca.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
 
@@ -470,38 +416,20 @@ public class FormaDetaljiKupca extends JDialog {
 
         try {
 
-            KlijentKontroler
-                    .getInstance()
-                    .obrisiKupca(kupac);
+            KlijentKontroler.getInstance().obrisiKupca(kupac);
 
-            FormaPretragaKupaca parent =
-                    (FormaPretragaKupaca)
-                            getParent();
+            FormaPretragaKupaca parent = (FormaPretragaKupaca) getParent();
 
             parent.refreshTable();
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Sistem je obrisao kupca."
-            );
+            JOptionPane.showMessageDialog(this,"Sistem je obrisao kupca.");
 
             dispose();
 
         } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Sistem ne moze da obrise kupca.\n"
-                            + ex.getMessage()
-            );
-
-            Logger.getLogger(
-                    FormaDetaljiKupca.class.getName())
-                    .log(
-                            Level.SEVERE,
-                            null,
-                            ex
-                    );
+            JOptionPane.showMessageDialog(this,"Sistem ne moze da obrise kupca.\n"+ ex.getMessage());
+            Logger.getLogger(FormaDetaljiKupca.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
 }

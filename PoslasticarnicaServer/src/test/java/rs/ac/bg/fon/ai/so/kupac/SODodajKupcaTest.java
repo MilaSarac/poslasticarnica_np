@@ -39,14 +39,7 @@ class SODodajKupcaTest {
         Mesto mesto = new Mesto();
         mesto.setIdMesto(1L);
 
-        Kupac kupac = new Kupac(
-                null,
-                "Test",
-                "Kupac",
-                TEST_TELEFON,
-                TEST_EMAIL,
-                mesto
-        );
+        Kupac kupac = new Kupac(null,"Test","Kupac",TEST_TELEFON,TEST_EMAIL,mesto);
 
         assertDoesNotThrow(() -> operacija.izvrsi(kupac));
     }
@@ -54,32 +47,8 @@ class SODodajKupcaTest {
     @Test
     void testPogresanTipObjekta() {
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(new Kolac())
-        );
+        assertThrows(Exception.class,() -> operacija.izvrsi(new Kolac()));
     }
-
-    /*@Test
-    void testNeispravanEmail() {
-
-        Mesto mesto = new Mesto();
-        mesto.setIdMesto(1L);
-
-        Kupac kupac = new Kupac(
-                null,
-                "Test",
-                "Kupac",
-                TEST_TELEFON,
-                "testgmail",
-                mesto
-        );
-
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(kupac)
-        );
-    }*/
 
     @Test
     void testNeispravanTelefon() {
@@ -87,19 +56,9 @@ class SODodajKupcaTest {
         Mesto mesto = new Mesto();
         mesto.setIdMesto(1L);
 
-        Kupac kupac = new Kupac(
-                null,
-                "Test",
-                "Kupac",
-                "12345",
-                TEST_EMAIL,
-                mesto
-        );
+        Kupac kupac = new Kupac(null,"Test","Kupac","12345",TEST_EMAIL, mesto);
 
-        assertThrows(
-                Exception.class,
-                () -> operacija.izvrsi(kupac)
-        );
+        assertThrows(Exception.class, () -> operacija.izvrsi(kupac));
     }
 
     @Test
@@ -108,32 +67,15 @@ class SODodajKupcaTest {
         Mesto mesto = new Mesto();
         mesto.setIdMesto(1L);
 
-        Kupac prvi = new Kupac(
-                null,
-                "Test",
-                "Kupac",
-                TEST_TELEFON,
-                TEST_EMAIL,
-                mesto
-        );
+        Kupac prvi = new Kupac(null,"Test","Kupac",TEST_TELEFON,TEST_EMAIL,mesto);
 
         operacija.izvrsi(prvi);
 
         SODodajKupca drugaOperacija = new SODodajKupca();
 
-        Kupac drugi = new Kupac(
-                null,
-                "Drugi",
-                "Kupac",
-                "0698765432",
-                TEST_EMAIL,
-                mesto
-        );
+        Kupac drugi = new Kupac(null,"Drugi","Kupac","0698765432",TEST_EMAIL, mesto);
 
-        assertThrows(
-                Exception.class,
-                () -> drugaOperacija.izvrsi(drugi)
-        );
+        assertThrows(Exception.class, () -> drugaOperacija.izvrsi(drugi));
     }
 
     @Test
@@ -142,44 +84,24 @@ class SODodajKupcaTest {
         Mesto mesto = new Mesto();
         mesto.setIdMesto(1L);
 
-        Kupac prvi = new Kupac(
-                null,
-                "Test",
-                "Kupac",
-                TEST_TELEFON,
-                TEST_EMAIL,
-                mesto
-        );
+        Kupac prvi = new Kupac(null,"Test","Kupac",TEST_TELEFON,TEST_EMAIL,mesto);
 
         operacija.izvrsi(prvi);
 
         SODodajKupca drugaOperacija = new SODodajKupca();
 
-        Kupac drugi = new Kupac(
-                null,
-                "Drugi",
-                "Kupac",
-                TEST_TELEFON,
-                "drugi@gmail.com",
-                mesto
-        );
+        Kupac drugi = new Kupac(null,"Drugi","Kupac",TEST_TELEFON,"drugi@gmail.com",mesto);
 
-        assertThrows(
-                Exception.class,
-                () -> drugaOperacija.izvrsi(drugi)
-        );
+        assertThrows(Exception.class, () -> drugaOperacija.izvrsi(drugi));
     }
 
     private void obrisiTestKupca() throws Exception {
 
-        Connection connection =
-                DBBroker.getInstance().getConnection();
+        Connection connection = DBBroker.getInstance().getConnection();
 
-        String upit =
-                "DELETE FROM kupac WHERE email = ? OR brojTelefona = ?";
+        String upit = "DELETE FROM kupac WHERE email = ? OR brojTelefona = ?";
 
-        PreparedStatement ps =
-                connection.prepareStatement(upit);
+        PreparedStatement ps = connection.prepareStatement(upit);
 
         ps.setString(1, TEST_EMAIL);
         ps.setString(2, TEST_TELEFON);

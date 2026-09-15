@@ -17,19 +17,14 @@ class SOIzmeniKolacTest {
 
     private SOIzmeniKolac operacija;
     private Kolac testKolac;
-    private final String nazivTestKolaca = "JUnit Test Kolac";
+    private final String nazivTestKolaca = "Test Kolac";
 
     @BeforeEach
     void setUp() throws Exception {
 
         operacija = new SOIzmeniKolac();
 
-        Kolac kolac = new Kolac(
-                null,
-                nazivTestKolaca,
-                500,
-                "Pocetni opis"
-        );
+        Kolac kolac = new Kolac(null,nazivTestKolaca,500,"Opis");
 
         DBBroker.getInstance().dodaj(kolac);
         DBBroker.getInstance().getConnection().commit();
@@ -37,9 +32,7 @@ class SOIzmeniKolacTest {
         Kolac kriterijum = new Kolac();
         kriterijum.setNaziv(nazivTestKolaca);
 
-        ArrayList<ApstraktniDomenskiObjekat> lista =
-                DBBroker.getInstance().vrati(kriterijum);
-
+        ArrayList<ApstraktniDomenskiObjekat> lista = DBBroker.getInstance().vrati(kriterijum);
         testKolac = (Kolac) lista.get(0);
     }
 
@@ -49,13 +42,10 @@ class SOIzmeniKolacTest {
         Kolac kriterijum = new Kolac();
         kriterijum.setNaziv(nazivTestKolaca);
 
-        ArrayList<ApstraktniDomenskiObjekat> lista =
-                DBBroker.getInstance().vrati(kriterijum);
+        ArrayList<ApstraktniDomenskiObjekat> lista = DBBroker.getInstance().vrati(kriterijum);
 
         for (ApstraktniDomenskiObjekat ado : lista) {
-
             Kolac kolac = (Kolac) ado;
-
             if (kolac.getNaziv().equals(nazivTestKolaca)) {
                 DBBroker.getInstance().izbrisi(kolac);
             }
@@ -78,8 +68,7 @@ class SOIzmeniKolacTest {
         Kolac kriterijum = new Kolac();
         kriterijum.setNaziv(nazivTestKolaca);
 
-        ArrayList<ApstraktniDomenskiObjekat> lista =
-                DBBroker.getInstance().vrati(kriterijum);
+        ArrayList<ApstraktniDomenskiObjekat> lista = DBBroker.getInstance().vrati(kriterijum);
 
         Kolac izmenjeniKolac = (Kolac) lista.get(0);
 
@@ -98,12 +87,7 @@ class SOIzmeniKolacTest {
     @Test
     void testKolacNijeIzabran() {
 
-        Kolac kolac = new Kolac(
-                null,
-                "Neki kolac",
-                500,
-                "Opis"
-        );
+        Kolac kolac = new Kolac(null,"Neki kolac",500, "Opis");
 
         assertThrows(Exception.class, () -> {
             operacija.izvrsi(kolac);

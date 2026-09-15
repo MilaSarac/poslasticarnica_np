@@ -82,13 +82,8 @@ public class GlavnaForma extends javax.swing.JFrame {
         mnKupac = new javax.swing.JMenu();
         miNoviKupac = new javax.swing.JRadioButtonMenuItem();
         miPretraga = new javax.swing.JRadioButtonMenuItem();
-        mnSmena = new javax.swing.JMenu();
-        miNovaSmena = new javax.swing.JRadioButtonMenuItem();
-        miPretragaPlesa = new javax.swing.JRadioButtonMenuItem();
         mnKolac = new javax.swing.JMenu();
         miKolac = new javax.swing.JRadioButtonMenuItem();
-        mnRacun = new javax.swing.JMenu();
-        miPretragaEvidencije = new javax.swing.JRadioButtonMenuItem();
         mnOdjava = new javax.swing.JMenu();
         miOdjava = new javax.swing.JRadioButtonMenuItem();
         cmbKupac = new JComboBox();
@@ -271,28 +266,6 @@ public class GlavnaForma extends javax.swing.JFrame {
 
         jMenuBar1.add(mnKupac);
 
-        mnSmena.setText("Smena");
-
-        miNovaSmena.setSelected(true);
-        miNovaSmena.setText("Nova smena");
-        miNovaSmena.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
-            }
-        });
-        mnSmena.add(miNovaSmena);
-
-        miPretragaPlesa.setSelected(true);
-        miPretragaPlesa.setText("Pretraga");
-        miPretragaPlesa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
-            }
-        });
-        mnSmena.add(miPretragaPlesa);
-
-        jMenuBar1.add(mnSmena);
-
         mnKolac.setText("Kolac");
 
         miKolac.setSelected(true);
@@ -305,19 +278,6 @@ public class GlavnaForma extends javax.swing.JFrame {
         mnKolac.add(miKolac);
 
         jMenuBar1.add(mnKolac);
-
-        mnRacun.setText("Racun");
-
-        miPretragaEvidencije.setSelected(true);
-        miPretragaEvidencije.setText("Pretraga");
-        miPretragaEvidencije.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
-            }
-        });
-        mnRacun.add(miPretragaEvidencije);
-
-        jMenuBar1.add(mnRacun);
 
         mnOdjava.setText("Odjava");
 
@@ -394,26 +354,16 @@ public class GlavnaForma extends javax.swing.JFrame {
             double cena = kolac.getCena();
             double iznos = cena * kolicina;
 
-            StavkaRacuna stavka = new StavkaRacuna(
-                    null,
-                    0,
-                    cena,
-                    kolicina,
-                    iznos,
-                    kolac
-            );
+            StavkaRacuna stavka = new StavkaRacuna(null,0,cena,kolicina,iznos,kolac);
 
             model.dodajStavku(stavka);
 
-            txtUkupanIznos.setText(
-                    String.valueOf(model.vratiUkupanIznos())
-            );
+            txtUkupanIznos.setText(String.valueOf(model.vratiUkupanIznos()));
 
             txtKolicina.setText("");
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Količina mora biti ceo broj!");
+            JOptionPane.showMessageDialog(this,"Količina mora biti ceo broj!");
         }
     }
     
@@ -439,53 +389,30 @@ public class GlavnaForma extends javax.swing.JFrame {
             Kupac kupac = (Kupac) cmbKupac.getSelectedItem();
 
             if (kupac == null) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Morate izabrati kupca!"
-                );
+                JOptionPane.showMessageDialog(this, "Morate izabrati kupca!");
                 return;
             }
 
-            ModelTabeleStavkaRacuna model =
-                    (ModelTabeleStavkaRacuna) tblStavke.getModel();
+            ModelTabeleStavkaRacuna model = (ModelTabeleStavkaRacuna) tblStavke.getModel();
 
-            ArrayList<StavkaRacuna> stavke =
-                    model.getLista();
+            ArrayList<StavkaRacuna> stavke = model.getLista();
 
             if (stavke == null || stavke.isEmpty()) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Račun mora imati barem jednu stavku!"
-                );
+                JOptionPane.showMessageDialog(this,"Račun mora imati barem jednu stavku!");
                 return;
             }
 
-            double ukupanIznos =
-                    model.vratiUkupanIznos();
+            double ukupanIznos = model.vratiUkupanIznos();
 
-            Racun racun = new Racun(
-                    null,
-                    new Date(),
-                    ukupanIznos,
-                    ulogovaniPoslasticar,
-                    kupac,
-                    stavke
-            );
+            Racun racun = new Racun(null,new Date(),ukupanIznos,ulogovaniPoslasticar,kupac,stavke);
 
             KlijentKontroler.getInstance().ubaciRacun(racun);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Račun je uspešno sačuvan!"
-            );
+            JOptionPane.showMessageDialog(this,"Račun je uspešno sačuvan!");
 
         } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Greška prilikom čuvanja računa: "
-                            + ex.getMessage()
-            );
+            JOptionPane.showMessageDialog(this,"Greška prilikom čuvanja računa: "+ ex.getMessage());
         }
     }
 
@@ -538,17 +465,12 @@ public class GlavnaForma extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JRadioButtonMenuItem miKolac;
-    private javax.swing.JRadioButtonMenuItem miNovaSmena;
     private javax.swing.JRadioButtonMenuItem miNoviKupac;
     private javax.swing.JRadioButtonMenuItem miOdjava;
     private javax.swing.JRadioButtonMenuItem miPretraga;
-    private javax.swing.JRadioButtonMenuItem miPretragaEvidencije;
-    private javax.swing.JRadioButtonMenuItem miPretragaPlesa;
     private javax.swing.JMenu mnKolac;
-    private javax.swing.JMenu mnRacun;
     private javax.swing.JMenu mnOdjava;
     private javax.swing.JMenu mnKupac;
-    private javax.swing.JMenu mnSmena;
     private javax.swing.JTable tblStavke;
     private javax.swing.JTextField txtUkupanIznos;
     private javax.swing.JTextField txtKolicina;
@@ -571,8 +493,7 @@ public class GlavnaForma extends javax.swing.JFrame {
     private void popuniKupce() {
         try {
 
-            ArrayList<Kupac> kupci =
-                    KlijentKontroler.getInstance().vratiSveKupce();
+            ArrayList<Kupac> kupci = KlijentKontroler.getInstance().vratiSveKupce();
 
             cmbKupac.removeAllItems();
 
@@ -604,16 +525,11 @@ public class GlavnaForma extends javax.swing.JFrame {
 
         try {
 
-            KlijentKontroler.getInstance()
-                    .logout(ulogovaniPoslasticar);
+            KlijentKontroler.getInstance().logout(ulogovaniPoslasticar);
 
-            Sesija.getInstance()
-                    .setUlogovaniPoslasticar(null);
+            Sesija.getInstance().setUlogovaniPoslasticar(null);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Uspešno ste se odjavili sa sistema!"
-            );
+            JOptionPane.showMessageDialog(this,"Uspešno ste se odjavili sa sistema!");
 
             this.dispose();
 
@@ -621,12 +537,7 @@ public class GlavnaForma extends javax.swing.JFrame {
             loginForma.setVisible(true);
 
         } catch (Exception ex) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Greška prilikom odjavljivanja: "
-                            + ex.getMessage()
-            );
+            JOptionPane.showMessageDialog(this,"Greška prilikom odjavljivanja: "+ ex.getMessage());
         }
     }
 }

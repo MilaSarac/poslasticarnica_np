@@ -23,21 +23,15 @@ class SOObrisiKolacTest {
 
         operacija = new SOObrisiKolac();
 
-        Kolac kolac = new Kolac(
-                null,
-                "JUnit Test Kolac Za Brisanje",
-                500,
-                "Test opis"
-        );
+        Kolac kolac = new Kolac(null,"Test kolac za brisanje",500,"Test opis");
 
         DBBroker.getInstance().dodaj(kolac);
         DBBroker.getInstance().getConnection().commit();
 
         Kolac kriterijum = new Kolac();
-        kriterijum.setNaziv("JUnit Test Kolac Za Brisanje");
+        kriterijum.setNaziv("Test kolac za brisanje");
 
-        ArrayList<ApstraktniDomenskiObjekat> lista =
-                DBBroker.getInstance().vrati(kriterijum);
+        ArrayList<ApstraktniDomenskiObjekat> lista = DBBroker.getInstance().vrati(kriterijum);
 
         testKolac = (Kolac) lista.get(0);
     }
@@ -46,15 +40,13 @@ class SOObrisiKolacTest {
     void tearDown() throws Exception {
 
         Kolac kriterijum = new Kolac();
-        kriterijum.setNaziv("JUnit Test Kolac Za Brisanje");
+        kriterijum.setNaziv("Test kolac za brisanje");
 
-        ArrayList<ApstraktniDomenskiObjekat> lista =
-                DBBroker.getInstance().vrati(kriterijum);
+        ArrayList<ApstraktniDomenskiObjekat> lista = DBBroker.getInstance().vrati(kriterijum);
 
         for (ApstraktniDomenskiObjekat ado : lista) {
             Kolac kolac = (Kolac) ado;
-
-            if (kolac.getNaziv().equals("JUnit Test Kolac Za Brisanje")) {
+            if (kolac.getNaziv().equals("Test kolac za brisanje")) {
                 DBBroker.getInstance().izbrisi(kolac);
             }
         }
@@ -71,10 +63,9 @@ class SOObrisiKolacTest {
         operacija.izvrsi(testKolac);
 
         Kolac kriterijum = new Kolac();
-        kriterijum.setNaziv("JUnit Test Kolac Za Brisanje");
+        kriterijum.setNaziv("Test kolac za brisanje");
 
-        ArrayList<ApstraktniDomenskiObjekat> lista =
-                DBBroker.getInstance().vrati(kriterijum);
+        ArrayList<ApstraktniDomenskiObjekat> lista = DBBroker.getInstance().vrati(kriterijum);
 
         assertTrue(lista.isEmpty());
     }

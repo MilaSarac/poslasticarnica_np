@@ -284,88 +284,47 @@ public class FormaNoviKupac extends JDialog {
 
         try {
 
-            if (txtIme.getText().isEmpty()
-                    || txtPrezime.getText().isEmpty()
-                    || txtEmail.getText().isEmpty()
-                    || txtBrojTelefona.getText().isEmpty()
-                    || cmbMesto.getSelectedItem() == null) {
+            if (txtIme.getText().isEmpty() || txtPrezime.getText().isEmpty() || txtEmail.getText().isEmpty() 
+            		|| txtBrojTelefona.getText().isEmpty() || cmbMesto.getSelectedItem() == null) {
 
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Sva polja moraju biti popunjena!"
-                );
-
+                JOptionPane.showMessageDialog(this,"Sva polja moraju biti popunjena!");
                 return;
             }
 
-            String ime =
-                    txtIme.getText();
+            String ime = txtIme.getText();
 
-            String prezime =
-                    txtPrezime.getText();
+            String prezime = txtPrezime.getText();
 
-            String brojTelefona =
-                    txtBrojTelefona.getText();
+            String brojTelefona = txtBrojTelefona.getText();
 
-            String email =
-                    txtEmail.getText();
+            String email = txtEmail.getText();
 
-            Mesto mesto =
-                    (Mesto) cmbMesto.getSelectedItem();
+            Mesto mesto = (Mesto) cmbMesto.getSelectedItem();
 
-            Kupac kupac =
-                    new Kupac(
-                            null,
-                            ime,
-                            prezime,
-                            brojTelefona,
-                            email,
-                            mesto
-                    );
+            Kupac kupac = new Kupac(null, ime, prezime, brojTelefona, email, mesto);
 
-            KlijentKontroler
-                    .getInstance()
-                    .dodajKupca(kupac);
+            KlijentKontroler.getInstance().dodajKupca(kupac);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Sistem je zapamtio kupca."
-            );
+            JOptionPane.showMessageDialog(this,"Sistem je zapamtio kupca.");
 
             dispose();
 
         } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Sistem ne moze da zapamti kupca.\n"
-                            + ex.getMessage()
-            );
+            JOptionPane.showMessageDialog(this,"Sistem ne moze da zapamti kupca.\n"+ ex.getMessage());
 
-            Logger.getLogger(
-                    FormaNoviKupac.class.getName())
-                    .log(
-                            Level.SEVERE,
-                            null,
-                            ex
-                    );
+            Logger.getLogger(FormaNoviKupac.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
 
-    private void btnZatvoriActionPerformed(
-            java.awt.event.ActionEvent evt) {
-
+    private void btnZatvoriActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
     }
 
     private void popuniMesta() {
 
         try {
-
-            ArrayList<Mesto> mesta =
-                    KlijentKontroler
-                            .getInstance()
-                            .vratiSvaMesta();
+        	ArrayList<Mesto> mesta = KlijentKontroler.getInstance().vratiSvaMesta();
 
             cmbMesto.removeAllItems();
 
@@ -374,31 +333,18 @@ public class FormaNoviKupac extends JDialog {
             }
 
         } catch (Exception ex) {
-
-            Logger.getLogger(
-                    FormaNoviKupac.class.getName())
-                    .log(
-                            Level.SEVERE,
-                            null,
-                            ex
-                    );
+            Logger.getLogger(FormaNoviKupac.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
 
     public static void main(String[] args) {
 
-        EventQueue.invokeLater(
-                new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
 
                     @Override
                     public void run() {
 
-                        FormaNoviKupac dialog =
-                                new FormaNoviKupac(
-                                        new javax.swing.JFrame(),
-                                        true
-                                );
-
+                        FormaNoviKupac dialog = new FormaNoviKupac(new javax.swing.JFrame(),true);
                         dialog.setVisible(true);
                     }
                 }

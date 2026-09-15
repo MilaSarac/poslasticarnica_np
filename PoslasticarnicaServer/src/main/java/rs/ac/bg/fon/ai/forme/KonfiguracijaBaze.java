@@ -132,8 +132,6 @@ public class KonfiguracijaBaze extends javax.swing.JFrame {
             Path cfg = Paths.get("konfiguracija.properties");
             Properties prop = new Properties();
 
-            //Možda u fajlu postoje neka druga podešavanja koja nisu na ovoj formi. Ako ih prvo učitamo, 
-            //mi ćemo ih sačuvati, a samo promeniti URL, username i password.
             if (Files.exists(cfg)) {
                 try (InputStream in = Files.newInputStream(cfg)) {
                     prop.load(in);
@@ -145,10 +143,10 @@ public class KonfiguracijaBaze extends javax.swing.JFrame {
             prop.setProperty("password", password);
 
             try (OutputStream out = Files.newOutputStream(cfg,
-                    StandardOpenOption.CREATE,//Napravi fajl ako ne postoji
-                    StandardOpenOption.TRUNCATE_EXISTING,//Ako fajl postoji, isprazni ga pre nego što upiše novo (da ne ostane stari sadržaj pomešan sa novim)
-                    StandardOpenOption.WRITE)) {//Otvori ovaj fajl tako da mogu da se upisuju podaci u njega
-                prop.store(out, "Konfiguracija baze");//Ova komanda uzima sve iz memorije i pretvara u tekst format ključ=vrednost u fajlu. Drugi parametar je komentar koji će stajati u prvoj liniji fajla.
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING,
+                    StandardOpenOption.WRITE)) {
+                prop.store(out, "Konfiguracija baze");
             }
 
             JOptionPane.showMessageDialog(this, "Konfiguracija uspešno sačuvana.");
@@ -200,15 +198,13 @@ public class KonfiguracijaBaze extends javax.swing.JFrame {
     // End of variables declaration                   
 
     private void popuniPolja() {
-        //pokušava da pročita podatke o bazi podataka iz fajla, a ako fajl ne postoji ili se javi greška, 
-        //onda ponudi neke osnovne (podrazumevane) vrednosti
         try {
-            Properties properties = new Properties(); //cuva parove kljuc-vrednost
-            Path cfg = Paths.get("konfiguracija.properties"); //definiše putanju do fajla 
+            Properties properties = new Properties();
+            Path cfg = Paths.get("konfiguracija.properties");
 
-            if (Files.exists(cfg)) { //da li fajl uopšte postoji
-                try (InputStream in = Files.newInputStream(cfg)) { //otvara se InputStream (kanal za čitanje)
-                    properties.load(in); //uzima sav tekst iz fajla i "puni" properties objekat podacima
+            if (Files.exists(cfg)) {
+                try (InputStream in = Files.newInputStream(cfg)) {
+                    properties.load(in);
                 }
             }
 
